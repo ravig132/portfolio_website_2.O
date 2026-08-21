@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ravi Kumar Gangwar | Java & Backend Developer Portfolio</title>
+  <meta name="description" content="Personal Portfolio of Ravi Kumar Gangwar - CSE Student, Aspiring Java Developer, Backend Specialist, and Problem Solver.">
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Liquid Particle Canvas Background -->
+  <canvas id="liquid-canvas"></canvas>
+
+  <!-- Fluid Glowing Cursor Trailer -->
+  <div id="fluid-cursor"></div>
+  <div id="fluid-cursor-follower"></div>
+
+  <!-- Navigation Header -->
+  <header class="navbar-wrapper">
+    <nav class="navbar" id="navbar" aria-label="Main Navigation">
+      <a href="#home" class="nav-brand">
+        <div class="brand-droplet">
+          <i class="fa-solid fa-droplet"></i>
+        </div>
+        <span class="brand-text">Ravi<span class="brand-accent">.Java</span></span>
+      </a>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#why-java" class="nav-link">Why Java?</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#dsa" class="nav-link">DSA</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Menu">
+        <i class="fa-solid fa-bars-staggered"></i>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- SECTION 1: HERO -->
+    <section class="hero-section" id="home">
+      <div class="hero-container">
+        
+        <div class="hero-content">
+          <div class="status-badge glass-card">
+            <span class="pulse-dot"></span>
+            <span>Available for Internships & Java Developer Roles</span>
+          </div>
+
+          <h1 class="hero-name">Ravi Kumar Gangwar</h1>
+          <h2 class="hero-title">
+            <span id="typing-text">Java Developer</span>
+            <span class="cursor-blink">|</span>
+          </h2>
+
+          <p class="hero-bio">
+            Building reliable backend systems, solving complex problems, and transforming ideas into efficient software.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary glass-btn">
+              <span>View My Projects</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <button class="btn btn-secondary glass-btn" id="open-resume-btn">
+              <i class="fa-solid fa-file-arrow-down"></i>
+              <span>Download Resume</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D Water Droplet Visual with Integrated Photograph & Java Matrix -->
+        <div class="hero-visual">
+          <div class="droplet-container">
+            
+            <!-- Outer Liquid Glow Rings -->
+            <div class="liquid-ring ring-1"></div>
+            <div class="liquid-ring ring-2"></div>
+
+            <!-- Central 3D Animated Water Droplet Portal with Photograph -->
+            <div class="water-droplet-3d portrait-droplet">
+              <!-- Embedded User Photograph -->
+              <img src="assets\my_image.png" alt="Ravi Kumar Gangwar" class="hero-portrait">
+              
+              <!-- Glass Refraction & Specular Overlays -->
+              <div class="droplet-glass-overlay"></div>
+              <div class="droplet-shine"></div>
+              <div class="droplet-highlight"></div>
+
+              <!-- Floating Java Matrix Badges -->
+              <div class="hero-photo-badges">
+                <span class="photo-badge badge-java"><i class="fa-brands fa-java"></i> Java</span>
+                <span class="photo-badge badge-db"><i class="fa-solid fa-database"></i> SQL</span>
+              </div>
+            </div>
+
+            <!-- Orbiting Liquid Nodes -->
+            <div class="orbiting-node node-1" title="Java Core"><i class="fa-brands fa-java"></i></div>
+            <div class="orbiting-node node-2" title="Backend Systems"><i class="fa-solid fa-server"></i></div>
+            <div class="orbiting-node node-3" title="Problem Solving"><i class="fa-solid fa-brain"></i></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: ABOUT -->
+    <section class="section about-section" id="about">
+      <div class="section-title-wrap text-center">
+        <span class="section-badge"><i class="fa-solid fa-user"></i> Introduction</span>
+        <h2 class="section-heading">About Me</h2>
+        <div class="heading-underline"></div>
+      </div>
+
+      <div class="about-grid">
+        <div class="glass-card about-card">
+          <div class="about-header">
+            <div class="avatar-droplet avatar-photo-wrap">
+              <img src="C:/Users/HP/.gemini/antigravity/brain/9027bf77-68c8-4f37-9c7c-a720a30a4676/.user_uploaded/media_1787334508560.jpg" alt="Ravi Kumar Gangwar Avatar" class="about-avatar-img">
+            </div>
+            <div>
+              <h3>Ravi Kumar Gangwar</h3>
+              <p class="text-cyan">Computer Science Engineering Student</p>
+            </div>
+          </div>
+
+          <p class="about-text">
+            I am a passionate Computer Science Engineering student and aspiring <strong>Java Developer</strong> with a strong focus on backend architecture, object-oriented design, database optimization, and algorithm performance.
+          </p>
+
+          <p class="about-text">
+            My engineering philosophy centers around <strong>Clean Code</strong>, structural efficiency, and scalability. I enjoy designing database schemas, writing structured JDBC queries, and solving algorithmic problems to build dependable software solutions.
+          </p>
+
+          <div class="about-tags">
+            <span class="glass-pill"><i class="fa-solid fa-check text-cyan"></i> Backend Systems</span>
+            <span class="glass-pill"><i class="fa-solid fa-check text-cyan"></i> Object-Oriented Design</span>
+            <span class="glass-pill"><i class="fa-solid fa-check text-cyan"></i> Database Management</span>
+            <span class="glass-pill"><i class="fa-solid fa-check text-cyan"></i> Data Structures</span>
+          </div>
+        </div>
+
+        <!-- Animated Statistics -->
+        <div class="stats-grid">
+          <div class="glass-card stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-diagram-project"></i></div>
+            <div class="stat-number" data-count="10">0</div>
+            <div class="stat-plus">+</div>
+            <p class="stat-label">Projects Completed</p>
+            <div class="stat-ripple"></div>
+          </div>
+
+          <div class="glass-card stat-card highlight-stat">
+            <div class="stat-icon"><i class="fa-brands fa-java"></i></div>
+            <div class="stat-text-title">Java</div>
+            <p class="stat-label">Primary Stack Focus</p>
+            <div class="stat-ripple"></div>
+          </div>
+
+          <div class="glass-card stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="stat-text-title">CSE</div>
+            <p class="stat-label">B.Tech Engineering</p>
+            <div class="stat-ripple"></div>
+          </div>
+
+          <div class="glass-card stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-brain"></i></div>
+            <div class="stat-number" data-count="100">0</div>
+            <div class="stat-plus">+</div>
+            <p class="stat-label">Problems Solved</p>
+            <div class="stat-ripple"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: SKILLS -->
+    <section class="section skills-section" id="skills">
+      <div class="section-title-wrap text-center">
+        <span class="section-badge"><i class="fa-solid fa-laptop-code"></i> Proficiency</span>
+        <h2 class="section-heading">Technical Skills</h2>
+        <p class="section-sub">Hover over any skill card to reveal details and liquid interaction.</p>
+        <div class="heading-underline"></div>
+      </div>
+
+      <div class="skills-grid">
+        
+        <!-- Java (Highlighted Primary) -->
+        <div class="glass-card skill-card primary-skill-card">
+          <div class="skill-badge-top">PRIMARY</div>
+          <div class="skill-icon-wrap">
+            <i class="fa-brands fa-java"></i>
+          </div>
+          <h3 class="skill-name">Java</h3>
+          <p class="skill-desc">OOP, Collections, Multithreading, Exception Handling, Memory Management.</p>
+          <div class="skill-water-glow"></div>
+        </div>
+
+        <div class="glass-card skill-card">
+          <div class="skill-icon-wrap"><i class="fa-solid fa-database"></i></div>
+          <h3 class="skill-name">SQL</h3>
+          <p class="skill-desc">Relational Schema Design, Complex Queries, Joins, Indexing.</p>
+          <div class="skill-water-glow"></div>
+        </div>
+
+        <div class="glass-card skill-card">
+          <div class="skill-icon-wrap"><i class="fa-solid fa-plug"></i></div>
+          <h3 class="skill-name">JDBC</h3>
+          <p class="skill-desc">Database Connectivity, PreparedStatements, Transactions.</p>
+          <div class="skill-water-glow"></div>
+        </div>
+
+        <div class="glass-card skill-card">
+          <div class="skill-icon-wrap"><i class="fa-solid fa-server"></i></div>
+          <h3 class="skill-name">MySQL</h3>
+          <p class="skill-desc">Data Persistence, Normalization, Stored Procedures, Triggers.</p>
+          <div class="skill-water-glow"></div>
+        </div>
+
+        <div class="glass-card skill-card">
+          <div class="skill-icon-wrap"><i class="fa-brands fa-git-alt"></i></div>
+          <h3 class="skill-name">Git</h3>
+          <p class="skill-desc">Version Control, Branching Strategies, Commit Workflows.</p>
+          <div class="skill-water-glow"></div>
+        </div>
+
+        <div class="glass-card skill-card">
+          <div class="skill-icon-wrap"><i class="fa-brands fa-github"></i></div>
+          <h3 class="skill-name">GitHub</h3>
+          <p class="skill-desc">Repository Management, Pull Requests, Code Reviews.</p>
+          <div class="skill-water-glow"></div>
+        </div>
+
+        <div class="glass-card skill-card">
+          <div class="skill-icon-wrap"><i class="fa-brands fa-html5"></i></div>
+          <h3 class="skill-name">HTML5</h3>
+          <p class="skill-desc">Semantic Markup, Accessibility (a11y), Modern UI Layouts.</p>
+          <div class="skill-water-glow"></div>
+        </div>
+
+        <div class="glass-card skill-card">
+          <div class="skill-icon-wrap"><i class="fa-brands fa-css3-alt"></i></div>
+          <h3 class="skill-name">CSS3</h3>
+          <p class="skill-desc">Flexbox, Grid, Custom Animations, Glassmorphism, Responsive UI.</p>
+          <div class="skill-water-glow"></div>
+        </div>
+
+        <div class="glass-card skill-card">
+          <div class="skill-icon-wrap"><i class="fa-brands fa-js"></i></div>
+          <h3 class="skill-name">JavaScript</h3>
+          <p class="skill-desc">ES6+, DOM Manipulation, Async/Await, Web APIs, Dynamic Effects.</p>
+          <div class="skill-water-glow"></div>
+        </div>
+
+        <div class="glass-card skill-card">
+          <div class="skill-icon-wrap"><i class="fa-solid fa-brain"></i></div>
+          <h3 class="skill-name">DSA</h3>
+          <p class="skill-desc">Data Structures, Algorithmic Optimization, Time/Space Analysis.</p>
+          <div class="skill-water-glow"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: WHY JAVA? -->
+    <section class="section java-section" id="why-java">
+      <div class="section-title-wrap text-center">
+        <span class="section-badge"><i class="fa-brands fa-java"></i> Core Architecture</span>
+        <h2 class="section-heading">Why Java?</h2>
+        <p class="section-sub">The Backbone of High-Scale Enterprise Systems</p>
+        <div class="heading-underline"></div>
+      </div>
+
+      <div class="why-java-container">
+        <!-- Central Animated Liquid Java Sphere -->
+        <div class="java-core-sphere">
+          <div class="sphere-fluid"></div>
+          <div class="sphere-core">
+            <i class="fa-brands fa-java core-logo"></i>
+            <span>JAVA</span>
+          </div>
+        </div>
+
+        <!-- Surrounding Connected Feature Glass Nodes -->
+        <div class="nodes-grid">
+          
+          <div class="glass-card java-node node-pos-1">
+            <div class="node-icon"><i class="fa-solid fa-gears"></i></div>
+            <h4>Backend Development</h4>
+            <p>Engine for mission-critical business logic, concurrency control, and high throughput.</p>
+          </div>
+
+          <div class="glass-card java-node node-pos-2">
+            <div class="node-icon"><i class="fa-solid fa-building-user"></i></div>
+            <h4>Enterprise Applications</h4>
+            <p>Built for reliability, long-term maintainability, and enterprise-level scale.</p>
+          </div>
+
+          <div class="glass-card java-node node-pos-3">
+            <div class="node-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <h4>APIs & Services</h4>
+            <p>Seamless JSON REST endpoints, API contracts, and robust service communication.</p>
+          </div>
+
+          <div class="glass-card java-node node-pos-4">
+            <div class="node-icon"><i class="fa-solid fa-database"></i></div>
+            <h4>Database Integration</h4>
+            <p>Secure transactional persistence, Connection Pooling, and JDBC optimization.</p>
+          </div>
+
+          <div class="glass-card java-node node-pos-5">
+            <div class="node-icon"><i class="fa-solid fa-cubes"></i></div>
+            <h4>OOP Principles</h4>
+            <p>Encapsulation, Inheritance, Polymorphism, and Abstraction for clean software architecture.</p>
+          </div>
+
+          <div class="glass-card java-node node-pos-6">
+            <div class="node-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <h4>Scalable Software</h4>
+            <p>JVM garbage collection, multithreaded processing, and memory performance.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: PROJECTS -->
+    <section class="section projects-section" id="projects">
+      <div class="section-title-wrap text-center">
+        <span class="section-badge"><i class="fa-solid fa-code-fork"></i> Portfolio Showcase</span>
+        <h2 class="section-heading">Featured Projects</h2>
+        <p class="section-sub">Real-world applications engineered with clean code and persistent databases.</p>
+        <div class="heading-underline"></div>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <article class="glass-card project-card tilt-card">
+          <div class="project-droplet-glow"></div>
+          <div class="project-header">
+            <span class="project-category"><i class="fa-solid fa-landmark"></i> Enterprise Java App</span>
+            <div class="project-icon-badge"><i class="fa-solid fa-piggy-bank"></i></div>
+          </div>
+          
+          <h3 class="project-title">E-Bank Management System</h3>
+          <p class="project-description">
+            A comprehensive banking desktop software featuring secure account creation, instant money transfers, real-time balance updates, PIN verification, and dynamic transaction statement generation.
+          </p>
+
+          <div class="project-features">
+            <span><i class="fa-solid fa-circle-check text-cyan"></i> Account Management</span>
+            <span><i class="fa-solid fa-circle-check text-cyan"></i> Secure Transactions</span>
+            <span><i class="fa-solid fa-circle-check text-cyan"></i> Auth & Security</span>
+          </div>
+
+          <div class="project-tech-stack">
+            <span class="tech-badge">Java</span>
+            <span class="tech-badge">Swing</span>
+            <span class="tech-badge">JDBC</span>
+            <span class="tech-badge">MySQL</span>
+          </div>
+
+          <div class="project-actions">
+            <a href="https://github.com/ravikumargangwar" target="_blank" rel="noopener noreferrer" class="btn glass-btn btn-sm">
+              <i class="fa-brands fa-github"></i> GitHub Code
+            </a>
+            <button class="btn glass-btn btn-sm btn-cyan project-modal-trigger">
+              <i class="fa-solid fa-eye"></i> Details
+            </button>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="glass-card project-card tilt-card">
+          <div class="project-droplet-glow"></div>
+          <div class="project-header">
+            <span class="project-category"><i class="fa-solid fa-ticket"></i> Database System</span>
+            <div class="project-icon-badge"><i class="fa-solid fa-film"></i></div>
+          </div>
+
+          <h3 class="project-title">Ticket Booking System</h3>
+          <p class="project-description">
+            An automated ticket reservation and seat scheduling software integrated with MySQL database. Allows real-time seat availability checks, booking confirmation, and ticket retrieval.
+          </p>
+
+          <div class="project-features">
+            <span><i class="fa-solid fa-circle-check text-cyan"></i> Seat Scheduling</span>
+            <span><i class="fa-solid fa-circle-check text-cyan"></i> Booking Audit</span>
+            <span><i class="fa-solid fa-circle-check text-cyan"></i> Relational Queries</span>
+          </div>
+
+          <div class="project-tech-stack">
+            <span class="tech-badge">Java</span>
+            <span class="tech-badge">MySQL</span>
+            <span class="tech-badge">JDBC</span>
+            <span class="tech-badge">SQL</span>
+          </div>
+
+          <div class="project-actions">
+            <a href="https://github.com/ravikumargangwar" target="_blank" rel="noopener noreferrer" class="btn glass-btn btn-sm">
+              <i class="fa-brands fa-github"></i> GitHub Code
+            </a>
+            <button class="btn glass-btn btn-sm btn-cyan project-modal-trigger">
+              <i class="fa-solid fa-eye"></i> Details
+            </button>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="glass-card project-card tilt-card">
+          <div class="project-droplet-glow"></div>
+          <div class="project-header">
+            <span class="project-category"><i class="fa-solid fa-globe"></i> Modern Web UI</span>
+            <div class="project-icon-badge"><i class="fa-solid fa-droplet"></i></div>
+          </div>
+
+          <h3 class="project-title">Liquid Glass Portfolio Website</h3>
+          <p class="project-description">
+            A water-droplet themed interactive portfolio designed with custom glassmorphism, 3D card tilts, liquid particle background, custom cursor followers, and dynamic algorithm visualizers.
+          </p>
+
+          <div class="project-features">
+            <span><i class="fa-solid fa-circle-check text-cyan"></i> Vanilla Web Stack</span>
+            <span><i class="fa-solid fa-circle-check text-cyan"></i> 60fps Glass Effects</span>
+            <span><i class="fa-solid fa-circle-check text-cyan"></i> Accessible Layout</span>
+          </div>
+
+          <div class="project-tech-stack">
+            <span class="tech-badge">HTML5</span>
+            <span class="tech-badge">CSS3</span>
+            <span class="tech-badge">JavaScript</span>
+          </div>
+
+          <div class="project-actions">
+            <a href="https://github.com/ravikumargangwar" target="_blank" rel="noopener noreferrer" class="btn glass-btn btn-sm">
+              <i class="fa-brands fa-github"></i> GitHub Code
+            </a>
+            <a href="#home" class="btn glass-btn btn-sm btn-cyan">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Preview
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION 6: EXPERIENCE & LEARNING JOURNEY -->
+    <section class="section journey-section" id="experience">
+      <div class="section-title-wrap text-center">
+        <span class="section-badge"><i class="fa-solid fa-timeline"></i> Milestones</span>
+        <h2 class="section-heading">Learning Journey</h2>
+        <p class="section-sub">The continuous path of mastering software engineering.</p>
+        <div class="heading-underline"></div>
+      </div>
+
+      <div class="timeline-container">
+        <!-- Vertical Glowing Liquid Line -->
+        <div class="timeline-liquid-line" id="timeline-line"></div>
+
+        <div class="timeline-items">
+          
+          <div class="timeline-item left">
+            <div class="timeline-dot"><i class="fa-solid fa-droplet"></i></div>
+            <div class="glass-card timeline-content">
+              <span class="timeline-year">2023</span>
+              <h3>Started B.Tech CSE</h3>
+              <p>Commenced Computer Science & Engineering degree. Built strong foundations in programming logic, C/C++, and computer fundamentals.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item right">
+            <div class="timeline-dot"><i class="fa-solid fa-droplet"></i></div>
+            <div class="glass-card timeline-content">
+              <span class="timeline-year">2024</span>
+              <h3>Java & Programming Fundamentals</h3>
+              <p>Deep-dived into Java, mastering Object-Oriented Programming (OOP) concepts, Exception Handling, and the Java Collections Framework.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item left">
+            <div class="timeline-dot"><i class="fa-solid fa-droplet"></i></div>
+            <div class="glass-card timeline-content">
+              <span class="timeline-year">2025</span>
+              <h3>JDBC, SQL, MySQL, Git & GitHub</h3>
+              <p>Expanded into relational databases, writing optimized SQL queries, connecting Java with MySQL via JDBC, and managing code repositories.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item right">
+            <div class="timeline-dot"><i class="fa-solid fa-droplet"></i></div>
+            <div class="glass-card timeline-content">
+              <span class="timeline-year">2026</span>
+              <h3>Backend Development & Advanced Java</h3>
+              <p>Focused on backend software architecture, multi-tiered application design, performance tuning, and scalable API structures.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item left highlight-timeline">
+            <div class="timeline-dot active-dot"><i class="fa-solid fa-star"></i></div>
+            <div class="glass-card timeline-content">
+              <span class="timeline-year">Present</span>
+              <h3>Building Real-World Software</h3>
+              <p>Actively engineering software projects, practicing competitive problem solving on DSA, and preparing for software engineering roles.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: DSA / PROBLEM SOLVING & INTERACTIVE VISUALIZER -->
+    <section class="section dsa-section" id="dsa">
+      <div class="section-title-wrap text-center">
+        <span class="section-badge"><i class="fa-solid fa-brain"></i> Algorithmic Mastery</span>
+        <h2 class="section-heading">Problem Solving</h2>
+        <p class="section-sub">Core Data Structures & Algorithms proficiency.</p>
+        <div class="heading-underline"></div>
+      </div>
+
+      <!-- DSA Cards Grid -->
+      <div class="dsa-grid">
+        
+        <div class="glass-card dsa-card">
+          <div class="dsa-icon"><i class="fa-solid fa-layer-group"></i></div>
+          <h3>Arrays</h3>
+          <p>Contiguous memory storage, sliding window, two-pointer techniques.</p>
+        </div>
+
+        <div class="glass-card dsa-card">
+          <div class="dsa-icon"><i class="fa-solid fa-font"></i></div>
+          <h3>Strings</h3>
+          <p>Pattern searching, string manipulation, and string matching algorithms.</p>
+        </div>
+
+        <div class="glass-card dsa-card">
+          <div class="dsa-icon"><i class="fa-solid fa-link"></i></div>
+          <h3>Linked Lists</h3>
+          <p>Singly & doubly linked nodes, pointer manipulation, cycle detection.</p>
+        </div>
+
+        <div class="glass-card dsa-card">
+          <div class="dsa-icon"><i class="fa-solid fa-bars-staggered"></i></div>
+          <h3>Stack</h3>
+          <p>LIFO memory structure, expression evaluation, call stack simulation.</p>
+        </div>
+
+        <div class="glass-card dsa-card">
+          <div class="dsa-icon"><i class="fa-solid fa-list-ol"></i></div>
+          <h3>Queue</h3>
+          <p>FIFO operations, BFS traversals, priority queues, and buffers.</p>
+        </div>
+
+        <div class="glass-card dsa-card">
+          <div class="dsa-icon"><i class="fa-solid fa-network-wired"></i></div>
+          <h3>Trees</h3>
+          <p>Binary trees, Binary Search Trees (BST), and depth-first traversals.</p>
+        </div>
+
+        <div class="glass-card dsa-card">
+          <div class="dsa-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+          <h3>Searching</h3>
+          <p>Binary Search, Linear Search, searching in rotated sorted arrays.</p>
+        </div>
+
+        <div class="glass-card dsa-card">
+          <div class="dsa-icon"><i class="fa-solid fa-arrow-down-short-wide"></i></div>
+          <h3>Sorting</h3>
+          <p>Bubble Sort, Quick Sort, Merge Sort, and time-complexity optimization.</p>
+        </div>
+
+        <div class="glass-card dsa-card">
+          <div class="dsa-icon"><i class="fa-solid fa-rotate-left"></i></div>
+          <h3>Recursion</h3>
+          <p>Divide-and-conquer, backtracking, and recursive function calls.</p>
+        </div>
+
+      </div>
+
+      <!-- Interactive Algorithm Visualizer Container -->
+      <div class="glass-card algo-visualizer-container">
+        <div class="algo-header">
+          <div>
+            <h3><i class="fa-solid fa-play text-cyan"></i> Live Algorithm Visualizer</h3>
+            <p>Watch liquid array nodes sort in real-time using Vanilla JS.</p>
+          </div>
+          <div class="algo-controls">
+            <button class="btn glass-btn btn-sm" id="btn-reset-algo">Reset Array</button>
+            <button class="btn glass-btn btn-sm btn-cyan" id="btn-run-sort">Run Bubble Sort</button>
+          </div>
+        </div>
+
+        <!-- Animated Liquid Bars Area -->
+        <div class="algo-bars-area" id="algo-bars-area"></div>
+        <div class="algo-status" id="algo-status">Status: Ready to visualize</div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: CONTACT -->
+    <section class="section contact-section" id="contact">
+      <div class="section-title-wrap text-center">
+        <span class="section-badge"><i class="fa-solid fa-paper-plane"></i> Get In Touch</span>
+        <h2 class="section-heading">Let's Build Something Great</h2>
+        <p class="section-sub">Have a project idea, internship opportunity, or question? Send a message!</p>
+        <div class="heading-underline"></div>
+      </div>
+
+      <div class="contact-grid">
+        
+        <!-- Contact Info Cards -->
+        <div class="contact-info-wrap">
+          
+          <a href="mailto:gangwarr132@gmail.com" class="glass-card contact-info-card">
+            <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div>
+              <h4>Email Me</h4>
+              <p>ganngwarr132@gmail.com</p>
+            </div>
+          </a>
+
+          <a href="https://github.com/ravig132" target="_blank" rel="noopener noreferrer" class="glass-card contact-info-card">
+            <div class="contact-icon"><i class="fa-brands fa-github"></i></div>
+            <div>
+              <h4>GitHub Profile</h4>
+              <p>https://github.com/ravig132</p>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/in/ravi-kumar-gangwar-bb891927a/" target="_blank" rel="noopener noreferrer" class="glass-card contact-info-card">
+            <div class="contact-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+            <div>
+              <h4>LinkedIn Profile</h4>
+              <p>https://www.linkedin.com/in/ravi-kumar-gangwar-bb891927a/</p>
+            </div>
+          </a>
+
+        </div>
+
+        <!-- Glass Container Contact Form -->
+        <div class="glass-card contact-form-card">
+          <form id="contact-form">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Your Email</label>
+              <input type="email" id="email" name="email" placeholder="name@domain.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary glass-btn btn-block">
+              <span>Send Message</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+          <div id="form-toast" class="form-toast"></div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <i class="fa-solid fa-droplet text-cyan"></i>
+        <span>Ravi Kumar Gangwar</span>
+      </div>
+
+      <p>© 2026 Ravi Kumar Gangwar. Built with HTML, CSS & JavaScript.</p>
+
+      <div class="footer-socials">
+        <a href="https://github.com/ravig132" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/ravi-kumar-gangwar-bb891927a/" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="mailto:gangwarr132@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Resume Preview Modal -->
+  <div class="modal-overlay" id="resume-modal">
+    <div class="glass-card modal-content">
+      <button class="modal-close" id="close-resume-btn">&times;</button>
+      
+      <div class="resume-header">
+        <h2>Ravi Kumar Gangwar</h2>
+        <p>Java Developer | Backend Developer | Computer Science Engineering</p>
+      </div>
+
+      <div class="resume-body">
+        <h3><i class="fa-solid fa-user-graduate text-cyan"></i> Education</h3>
+        <p><strong>B.Tech in Computer Science & Engineering</strong> (Current Student)</p>
+
+        <h3><i class="fa-solid fa-gears text-cyan"></i> Core Competencies</h3>
+        <p>Java, SQL, JDBC, MySQL, Data Structures & Algorithms, Git, HTML/CSS/JavaScript.</p>
+
+        <h3><i class="fa-solid fa-briefcase text-cyan"></i> Key Projects</h3>
+        <ul>
+          <li><strong>E-Bank Management System:</strong> Java Desktop Application with JDBC & MySQL.</li>
+          <li><strong>Ticket Booking System:</strong> Relational Database integrated reservation system.</li>
+          <li><strong>Bank Management System:</strong> Secure ACID-compliant transaction engine.</li>
+        </ul>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary glass-btn" onclick="window.print()">
+          <i class="fa-solid fa-print"></i> Print / Save as PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

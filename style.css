@@ -994,19 +994,26 @@ body {
 .btn-block { width: 100%; }
 
 .form-toast {
-  margin-top: 1rem;
-  padding: 0.8rem;
+  margin-top: 1.2rem;
+  padding: 0.9rem 1.2rem;
   border-radius: var(--radius-sm);
   font-size: 0.9rem;
+  font-weight: 600;
   display: none;
   text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .form-toast.success {
-  display: block;
   background: rgba(0, 242, 255, 0.15);
   border: 1px solid var(--accent-cyan);
   color: var(--accent-cyan);
+}
+
+.form-toast.error {
+  background: rgba(255, 0, 85, 0.15);
+  border: 1px solid #ff0055;
+  color: #ff0055;
 }
 
 /* 13. FOOTER & MODAL */

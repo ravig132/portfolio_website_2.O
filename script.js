@@ -280,21 +280,108 @@ function initAlgorithmVisualizer() {
 }
 
 /* 8. CONTACT FORM SUBMISSION TOAST */
+/* ==========================================================================
+   EMAILJS CONFIGURATION & CONTACT FORM ENGINE
+   ========================================================================== */
+
+// 1. EmailJS Configuration - Replace with your actual EmailJS credentials
+const EMAILJS_CONFIG = {
+  PUBLIC_KEY: "4c4h7IjpNBKNE6cXZ",   // e.g. "user_xxxxxxxxxxxxxx"
+  SERVICE_ID: "service_kh7u30c",   // e.g. "service_xxxxxxx"
+  TEMPLATE_ID: "template_mo4c0db"  // e.g. "template_xxxxxxx"
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  initBackgroundCanvas();
+  initFluidCursor();
+  initNavbarScroll();
+  initTypingEffect();
+  initCounterAnimation();
+  init3DTilt();
+  initAlgorithmVisualizer();
+  initContactForm();
+  initResumeModal();
+});
+
+/* 8. Contact Form */
+
+let isSubmitting = false;
+
 function initContactForm() {
   const form = document.getElementById('contact-form');
   const toast = document.getElementById('form-toast');
 
   if (!form || !toast) return;
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    toast.className = 'form-toast success';
-    toast.innerHTML = '<i class="fa-solid fa-circle-check"></i> Thank you! Your message has been sent successfully.';
-    form.reset();
+  // Prevent duplicate listener attachments
+  if (form.dataset.listenerAttached === "true") return;
+  form.dataset.listenerAttached = "true";
 
-    setTimeout(() => {
-      toast.style.display = 'none';
-    }, 5000);
+  // Initialize EmailJS SDK
+  if (window.emailjs && EMAILJS_CONFIG.PUBLIC_KEY && EMAILJS_CONFIG.PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    if (isSubmitting) return;
+    isSubmitting = true;
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending Liquid Message...';
+    }
+
+    // Hide old toast state during active sending
+    toast.style.display = 'none';
+
+    try {
+      if (window.emailjs && EMAILJS_CONFIG.PUBLIC_KEY && EMAILJS_CONFIG.PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+        await emailjs.sendForm(
+          EMAILJS_CONFIG.SERVICE_ID,
+          EMAILJS_CONFIG.TEMPLATE_ID,
+          form
+        );
+
+        // Show Success Toast
+        toast.className = 'form-toast success';
+        toast.innerHTML = '<i class="fa-solid fa-circle-check"></i> Success! Your message has been sent directly to Ravi.';
+        toast.style.display = 'block'; // Force display to block
+        form.reset();
+      } else {
+        await new Promise(r => setTimeout(r, 1000));
+        
+        // Show Demo Success Toast
+        toast.className = 'form-toast success';
+        toast.innerHTML = '<i class="fa-solid fa-circle-check"></i> Demo Mode: Message simulated! (Configure your EmailJS keys in script.js for live delivery).';
+        toast.style.display = 'block'; // Force display to block
+        form.reset();
+      }
+    } catch (error) {
+      console.error('EmailJS Delivery Error:', error);
+      
+      // Show Error Toast with details
+      toast.className = 'form-toast error';
+      toast.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Delivery failed: ' + (error.text || error.message || 'Please check your EmailJS keys.');
+      toast.style.display = 'block'; // Force display to block
+    } finally {
+      isSubmitting = false;
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+      }
+
+      // Hide toast automatically after 7 seconds
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 7000);
+    }
   });
 }
 

@@ -49,16 +49,117 @@ html {
   background-color: var(--bg-dark);
   color: var(--text-primary);
   font-family: var(--font-main);
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  width: 100%;
 }
 
 body {
   position: relative;
   min-height: 100vh;
   line-height: 1.6;
+  width: 100%;
+  overflow-x: hidden !important;
 }
 
-/* Background Canvas */
+img, video, canvas, svg {
+  max-width: 100%;
+}
+/* ==========================================================================
+   MAGNETIC DYNAMIC CIRCLE CURSOR (MATCHED TO SITE WATER CYAN PALETTE)
+   ========================================================================== */
+
+@media (min-width: 769px) {
+  html, body, a, button, input, textarea, select, label, .glass-card, .btn, .nav-link {
+    cursor: none !important;
+  }
+}
+
+/* Central Precision Water Cyan Dot */
+#cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px var(--accent-cyan), 0 0 25px var(--accent-cyan);
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+/* Magnetic Outer Ring Matched to Site Cyan/Aqua Palette */
+#cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--accent-cyan);
+  background: rgba(0, 242, 255, 0.06);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999998;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              height 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.3s, background 0.3s, border-radius 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.35), inset 0 0 10px rgba(0, 242, 255, 0.2);
+}
+
+/* Magnetic Snap State - Intense Cyan Water Glow */
+#cursor-ring.is-magnetic {
+  width: 58px;
+  height: 58px;
+  border-color: var(--accent-cyan);
+  background: rgba(0, 242, 255, 0.18);
+  box-shadow: 0 0 35px rgba(0, 242, 255, 0.8), inset 0 0 20px rgba(0, 242, 255, 0.4);
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  animation: liquidWobble 2s ease-in-out infinite alternate;
+}
+
+@keyframes liquidWobble {
+  0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+}
+
+/* Fluid Distortion Trail Nodes - Glowing Cyan / Aqua Liquid Nodes */
+.cursor-trail-node {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.4), rgba(0, 168, 255, 0.2));
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999997;
+  transform: translate(-50%, -50%);
+  filter: blur(2px);
+  box-shadow: 0 0 12px rgba(0, 242, 255, 0.4);
+  transition: opacity 0.2s ease;
+}
+
+/* HOVER STATE FOR GLOW POINTER ON INTERACTIVE ELEMENTS */
+body.hovering-link #fluid-cursor {
+  transform: translate(-50%, -50%) scale(1.6);
+  background: #ffffff;
+  box-shadow: 0 0 20px #ffffff, 0 0 40px var(--accent-cyan);
+}
+
+body.hovering-link #fluid-cursor-follower {
+  width: 60px;
+  height: 60px;
+  background: rgba(0, 242, 255, 0.18);
+  border-color: rgba(0, 242, 255, 0.9);
+  box-shadow: 0 0 30px rgba(0, 242, 255, 0.6);
+}
+
+/* BACKGROUND CANVAS */
 #liquid-canvas {
   position: fixed;
   top: 0;
@@ -67,32 +168,6 @@ body {
   height: 100vh;
   z-index: -1;
   pointer-events: none;
-}
-
-/* Fluid Cursor Follower */
-#fluid-cursor {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  background: var(--accent-cyan);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.05s ease-out;
-}
-
-#fluid-cursor-follower {
-  position: fixed;
-  width: 32px;
-  height: 32px;
-  border: 1.5px solid var(--accent-cyan);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: transform 0.15s ease-out, width 0.2s, height 0.2s;
-  box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
 }
 
 /* UTILITY GLASSMORPHISM CLASSES */
@@ -126,7 +201,6 @@ body {
   font-size: 0.95rem;
   font-weight: 600;
   border-radius: var(--radius-full);
-  cursor: pointer;
   text-decoration: none;
   border: none;
   transition: var(--transition);
@@ -251,7 +325,6 @@ body {
   border: none;
   color: var(--text-primary);
   font-size: 1.4rem;
-  cursor: pointer;
 }
 
 /* 4. SECTIONS COMMON */
@@ -427,7 +500,6 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
-  /* Counter-rotate to stay upright */
   transform: rotate(45deg) scale(1.28);
   filter: brightness(1.05) contrast(1.05);
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -597,14 +669,13 @@ body {
 /* 7. SKILLS SECTION */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1.5rem;
 }
 
 .skill-card {
   padding: 1.8rem 1.4rem;
   text-align: center;
-  cursor: pointer;
 }
 
 .primary-skill-card {
@@ -680,7 +751,7 @@ body {
 
 .nodes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.8rem;
 }
 
@@ -783,6 +854,7 @@ body {
 .project-actions {
   display: flex;
   gap: 0.8rem;
+  flex-wrap: wrap;
 }
 
 /* 10. JOURNEY / TIMELINE SECTION */
@@ -860,7 +932,7 @@ body {
 /* 11. DSA & ALGORITHM VISUALIZER */
 .dsa-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.2rem;
   margin-bottom: 2.5rem;
 }
@@ -886,6 +958,11 @@ body {
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1.5rem;
+}
+
+.algo-controls {
+  display: flex;
+  gap: 0.6rem;
 }
 
 .algo-bars-area {
@@ -1090,7 +1167,6 @@ body {
   border: none;
   color: var(--text-primary);
   font-size: 2rem;
-  cursor: pointer;
 }
 
 .resume-header {
@@ -1110,33 +1186,300 @@ body {
   justify-content: flex-end;
 }
 
-/* 14. RESPONSIVE BREAKPOINTS */
-@media (max-width: 992px) {
-  .hero-container, .about-grid, .contact-grid {
-    grid-template-columns: 1fr;
+/* ==========================================================================
+   14. COMPREHENSIVE RESPONSIVE BREAKPOINTS (MOBILE, TABLET, LAPTOP)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 2rem;
   }
-  .hero-visual { order: -1; }
-  .timeline-item { width: 100%; padding-left: 3rem !important; padding-right: 0 !important; }
-  .timeline-item.left .timeline-dot, .timeline-item.right .timeline-dot { left: -16px; }
-  .timeline-liquid-line { left: 16px; }
+  .hero-name { font-size: 2.8rem; }
+  .section { padding: 5rem 1.5rem; }
 }
 
 @media (max-width: 768px) {
+  /* NAVBAR MOBILE DRAWER */
+  .navbar-wrapper {
+    width: 95%;
+    top: 0.8rem;
+  }
+
+  .navbar {
+    padding: 0.6rem 1.2rem;
+  }
+
   .nav-menu {
     position: fixed;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    background: rgba(10, 17, 36, 0.95);
-    backdrop-filter: blur(20px);
+    top: 75px;
+    left: 2.5%;
+    width: 95%;
+    background: rgba(5, 9, 20, 0.96);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid var(--border-glass-bright);
+    border-radius: var(--radius-md);
     flex-direction: column;
-    padding: 2rem;
-    clip-path: circle(0% at 100% 0);
-    transition: clip-path 0.4s ease-in-out;
+    padding: 2rem 1.5rem;
+    gap: 1.2rem;
+    align-items: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-20px) scale(0.95);
+    transition: var(--transition);
   }
+
   .nav-menu.active {
-    clip-path: circle(140% at 100% 0);
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
   }
-  .mobile-toggle { display: block; }
-  .hero-name { font-size: 2.6rem; }
+
+  .mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 242, 255, 0.1);
+    border: 1px solid var(--border-glass);
+    border-radius: 50%;
+    color: var(--accent-cyan);
+  }
+
+  /* HERO SECTION MOBILE */
+  .hero-section {
+    padding-top: 7rem;
+    padding-bottom: 3rem;
+    min-height: auto;
+  }
+
+  .hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2.5rem;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-name {
+    font-size: 2.3rem;
+  }
+
+  .hero-title {
+    font-size: 1.25rem;
+  }
+
+  .hero-bio {
+    font-size: 0.95rem;
+  }
+
+  .hero-actions {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .droplet-container {
+    width: 250px;
+    height: 250px;
+  }
+
+  .water-droplet-3d {
+    width: 200px;
+    height: 200px;
+  }
+
+  .orbiting-node {
+    width: 36px;
+    height: 36px;
+    font-size: 0.85rem;
+  }
+
+  /* ABOUT GRID MOBILE */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .about-card {
+    padding: 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1.2rem;
+  }
+
+  .stat-number, .stat-text-title {
+    font-size: 1.6rem;
+  }
+
+  /* SKILLS GRID MOBILE */
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    gap: 1rem;
+  }
+
+  .skill-card {
+    padding: 1.2rem 0.8rem;
+  }
+
+  .skill-icon-wrap {
+    font-size: 1.8rem;
+  }
+
+  .skill-name {
+    font-size: 1rem;
+  }
+
+  /* WHY JAVA SECTION MOBILE */
+  .nodes-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .java-core-sphere {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 2rem;
+  }
+
+  .core-logo {
+    font-size: 2rem;
+  }
+
+  /* PROJECTS MOBILE */
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .project-actions {
+    flex-direction: column;
+  }
+
+  .project-actions .btn {
+    width: 100%;
+  }
+
+  /* TIMELINE MOBILE FIX */
+  .timeline-container {
+    margin-top: 2rem;
+  }
+
+  .timeline-liquid-line {
+    left: 18px;
+    transform: none;
+  }
+
+  .timeline-items {
+    gap: 1.8rem;
+  }
+
+  .timeline-item {
+    width: 100% !important;
+    padding-left: 48px !important;
+    padding-right: 0 !important;
+    align-self: flex-start !important;
+  }
+
+  .timeline-dot {
+    left: 2px !important;
+    right: auto !important;
+    width: 32px;
+    height: 32px;
+  }
+
+  .timeline-content {
+    padding: 1.2rem;
+  }
+
+  /* DSA MOBILE */
+  .dsa-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.9rem;
+  }
+
+  .dsa-card {
+    padding: 1rem;
+  }
+
+  .algo-visualizer-container {
+    padding: 1.2rem;
+  }
+
+  .algo-bars-area {
+    height: 140px;
+    gap: 0.25rem;
+    padding: 0.5rem;
+  }
+
+  .algo-bar {
+    max-width: 16px;
+  }
+
+  .algo-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .algo-controls {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .algo-controls .btn {
+    flex: 1;
+  }
+
+  /* CONTACT GRID MOBILE */
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .contact-form-card {
+    padding: 1.4rem;
+  }
+
+  /* FOOTER MOBILE */
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-name {
+    font-size: 1.9rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dsa-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }

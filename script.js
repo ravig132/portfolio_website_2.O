@@ -1,8 +1,14 @@
 /* ==========================================================================
    LIQUID GLASS ENGINE & INTERACTIVE CONTROLLER
    Developer: Ravi Kumar Gangwar (Java Developer)
-   Features: Floating Canvas Particles, 3D Tilt, Typing, Algo Visualizer
+   Features: Floating Canvas Particles, Glow Pointer, 3D Tilt, EmailJS
    ========================================================================== */
+
+const EMAILJS_CONFIG = {
+  PUBLIC_KEY: "4c4h7IjpNBKNE6cXZ",
+  SERVICE_ID: "service_kh7u30c",
+  TEMPLATE_ID: "template_mo4c0db"
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   initBackgroundCanvas();
@@ -70,19 +76,121 @@ function initBackgroundCanvas() {
   animate();
 }
 
-/* 2. FLUID CURSOR TRAILER */
+/* --------------------------------------------------------------------------
+   MAGNETIC DYNAMIC CIRCLE CURSOR WITH INVERTED FLUID-DISTORTION TRAIL
+   -------------------------------------------------------------------------- */
 function initFluidCursor() {
-  const cursor = document.getElementById('fluid-cursor');
-  const follower = document.getElementById('fluid-cursor-follower');
-  if (!cursor || !follower) return;
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  let trailContainer = document.getElementById('cursor-trail-wrap');
+  
+  if (!dot || !ring) return;
 
+  // Create 6 fluid trail nodes dynamically
+  const trailNodes = [];
+  const trailCount = 6;
+  
+  if (!trailContainer) {
+    trailContainer = document.createElement('div');
+    trailContainer.id = 'cursor-trail-wrap';
+    document.body.appendChild(trailContainer);
+  }
+  trailContainer.innerHTML = '';
+
+  for (let i = 0; i < trailCount; i++) {
+    const node = document.createElement('div');
+    node.className = 'cursor-trail-node';
+    trailContainer.appendChild(node);
+    trailNodes.push({
+      el: node,
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+      scale: (1 - i * 0.14)
+    });
+  }
+
+  let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  let posDot = { x: mouse.x, y: mouse.y };
+  let posRing = { x: mouse.x, y: mouse.y };
+  let magneticTarget = null;
+
+  // Track mouse coordinates & magnetic element proximity
   document.addEventListener('mousemove', (e) => {
-    cursor.style.left = `${e.clientX}px`;
-    cursor.style.top = `${e.clientY}px`;
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
 
-    follower.style.left = `${e.clientX}px`;
-    follower.style.top = `${e.clientY}px`;
+    const interactiveElements = document.querySelectorAll(
+      '.btn, .nav-link, .brand-droplet, .skill-card, .project-card, .contact-info-card, .dsa-card, .social-icon'
+    );
+    let foundMagnetic = false;
+
+    interactiveElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const dist = Math.hypot(mouse.x - centerX, mouse.y - centerY);
+
+      // 70px magnetic pull threshold
+      if (dist < 70) {
+        foundMagnetic = true;
+        magneticTarget = {
+          x: centerX + (mouse.x - centerX) * 0.3, // Pull cursor toward element center
+          y: centerY + (mouse.y - centerY) * 0.3
+        };
+      }
+    });
+
+    if (!foundMagnetic) {
+      magneticTarget = null;
+    }
   });
+
+  // 60fps Smooth Lerp Animation Loop
+  function render() {
+    // Fast lerp for center dot
+    posDot.x += (mouse.x - posDot.x) * 0.45;
+    posDot.y += (mouse.y - posDot.y) * 0.45;
+
+    // Smooth lerp for outer ring with magnetic snapping
+    const targetX = magneticTarget ? magneticTarget.x : mouse.x;
+    const targetY = magneticTarget ? magneticTarget.y : mouse.y;
+
+    posRing.x += (targetX - posRing.x) * 0.16;
+    posRing.y += (targetY - posRing.y) * 0.16;
+
+    // Update DOM positions
+    dot.style.left = `${posDot.x}px`;
+    dot.style.top = `${posDot.y}px`;
+
+    ring.style.left = `${posRing.x}px`;
+    ring.style.top = `${posRing.y}px`;
+
+    if (magneticTarget) {
+      ring.classList.add('is-magnetic');
+    } else {
+      ring.classList.remove('is-magnetic');
+    }
+
+    // Update fluid trail nodes trailing behind the ring
+    let prevX = posRing.x;
+    let prevY = posRing.y;
+
+    trailNodes.forEach((node, index) => {
+      node.x += (prevX - node.x) * (0.35 - index * 0.04);
+      node.y += (prevY - node.y) * (0.35 - index * 0.04);
+
+      node.el.style.left = `${node.x}px`;
+      node.el.style.top = `${node.y}px`;
+      node.el.style.transform = `translate(-50%, -50%) scale(${node.scale})`;
+
+      prevX = node.x;
+      prevY = node.y;
+    });
+
+    requestAnimationFrame(render);
+  }
+
+  requestAnimationFrame(render);
 }
 
 /* 3. NAVBAR SCROLL & MOBILE MENU TOGGLE */
@@ -142,7 +250,7 @@ function initTypingEffect() {
     let typeSpeed = isDeleting ? 40 : 80;
 
     if (!isDeleting && charIndex === currentTitle.length) {
-      typeSpeed = 1800; // Pause at end
+      typeSpeed = 1800;
       isDeleting = true;
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
@@ -214,7 +322,7 @@ function init3DTilt() {
   });
 }
 
-/* 7. LIVE ALGORITHM VISUALIZER ENGINE (BUBBLE SORT) */
+/* 7. LIVE ALGORITHM VISUALIZER ENGINE */
 function initAlgorithmVisualizer() {
   const barsArea = document.getElementById('algo-bars-area');
   const btnRun = document.getElementById('btn-run-sort');
@@ -224,7 +332,7 @@ function initAlgorithmVisualizer() {
   if (!barsArea || !btnRun || !btnReset) return;
 
   let array = [];
-  const barCount = 16;
+  const barCount = window.innerWidth < 480 ? 10 : 16;
 
   function generateArray() {
     array = [];
@@ -278,18 +386,6 @@ function initAlgorithmVisualizer() {
 
   generateArray();
 }
-
-/* 8. CONTACT FORM SUBMISSION TOAST */
-/* ==========================================================================
-   EMAILJS CONFIGURATION & CONTACT FORM ENGINE
-   ========================================================================== */
-
-// 1. EmailJS Configuration - Replace with your actual EmailJS credentials
-const EMAILJS_CONFIG = {
-  PUBLIC_KEY: "4c4h7IjpNBKNE6cXZ",   // e.g. "user_xxxxxxxxxxxxxx"
-  SERVICE_ID: "service_kh7u30c",   // e.g. "service_xxxxxxx"
-  TEMPLATE_ID: "template_mo4c0db"  // e.g. "template_xxxxxxx"
-};
 
 document.addEventListener('DOMContentLoaded', () => {
   initBackgroundCanvas();

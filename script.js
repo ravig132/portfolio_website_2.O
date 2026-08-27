@@ -76,9 +76,7 @@ function initBackgroundCanvas() {
   animate();
 }
 
-/* --------------------------------------------------------------------------
-   MAGNETIC DYNAMIC CIRCLE CURSOR WITH INVERTED FLUID-DISTORTION TRAIL
-   -------------------------------------------------------------------------- */
+/* 2. DYNAMIC FLUID GLOW POINTER ENHANCEMENT */
 function initFluidCursor() {
   const dot = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
@@ -86,7 +84,6 @@ function initFluidCursor() {
   
   if (!dot || !ring) return;
 
-  // Create 6 fluid trail nodes dynamically
   const trailNodes = [];
   const trailCount = 6;
   
@@ -114,13 +111,12 @@ function initFluidCursor() {
   let posRing = { x: mouse.x, y: mouse.y };
   let magneticTarget = null;
 
-  // Track mouse coordinates & magnetic element proximity
   document.addEventListener('mousemove', (e) => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
 
     const interactiveElements = document.querySelectorAll(
-      '.btn, .nav-link, .brand-droplet, .skill-card, .project-card, .contact-info-card, .dsa-card, .social-icon'
+      '.btn, .nav-link, .brand-droplet, .skill-card, .project-card, .contact-info-card, .dsa-card'
     );
     let foundMagnetic = false;
 
@@ -130,11 +126,10 @@ function initFluidCursor() {
       const centerY = rect.top + rect.height / 2;
       const dist = Math.hypot(mouse.x - centerX, mouse.y - centerY);
 
-      // 70px magnetic pull threshold
       if (dist < 70) {
         foundMagnetic = true;
         magneticTarget = {
-          x: centerX + (mouse.x - centerX) * 0.3, // Pull cursor toward element center
+          x: centerX + (mouse.x - centerX) * 0.3,
           y: centerY + (mouse.y - centerY) * 0.3
         };
       }
@@ -145,20 +140,16 @@ function initFluidCursor() {
     }
   });
 
-  // 60fps Smooth Lerp Animation Loop
   function render() {
-    // Fast lerp for center dot
     posDot.x += (mouse.x - posDot.x) * 0.45;
     posDot.y += (mouse.y - posDot.y) * 0.45;
 
-    // Smooth lerp for outer ring with magnetic snapping
     const targetX = magneticTarget ? magneticTarget.x : mouse.x;
     const targetY = magneticTarget ? magneticTarget.y : mouse.y;
 
     posRing.x += (targetX - posRing.x) * 0.16;
     posRing.y += (targetY - posRing.y) * 0.16;
 
-    // Update DOM positions
     dot.style.left = `${posDot.x}px`;
     dot.style.top = `${posDot.y}px`;
 
@@ -171,7 +162,6 @@ function initFluidCursor() {
       ring.classList.remove('is-magnetic');
     }
 
-    // Update fluid trail nodes trailing behind the ring
     let prevX = posRing.x;
     let prevY = posRing.y;
 
@@ -208,14 +198,39 @@ function initNavbarScroll() {
   });
 
   if (mobileToggle && navMenu) {
-    mobileToggle.addEventListener('click', () => {
+    function toggleMenu(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       navMenu.classList.toggle('active');
-    });
+
+      const icon = mobileToggle.querySelector('i');
+      if (icon) {
+        if (navMenu.classList.contains('active')) {
+          icon.className = 'fa-solid fa-xmark';
+        } else {
+          icon.className = 'fa-solid fa-bars-staggered';
+        }
+      }
+    }
+
+    mobileToggle.addEventListener('click', toggleMenu);
 
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
         navMenu.classList.remove('active');
+        const icon = mobileToggle.querySelector('i');
+        if (icon) icon.className = 'fa-solid fa-bars-staggered';
       });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (navbar && !navbar.contains(e.target) && navMenu.classList.contains('active')) {
+        navMenu.classList.remove('active');
+        const icon = mobileToggle.querySelector('i');
+        if (icon) icon.className = 'fa-solid fa-bars-staggered';
+      }
     });
   }
 }
@@ -387,20 +402,7 @@ function initAlgorithmVisualizer() {
   generateArray();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  initBackgroundCanvas();
-  initFluidCursor();
-  initNavbarScroll();
-  initTypingEffect();
-  initCounterAnimation();
-  init3DTilt();
-  initAlgorithmVisualizer();
-  initContactForm();
-  initResumeModal();
-});
-
-/* 8. Contact Form */
-
+/* 8. CONTACT FORM SUBMISSION WITH VISIBLE TOAST FEEDBACK */
 let isSubmitting = false;
 
 function initContactForm() {
@@ -409,11 +411,9 @@ function initContactForm() {
 
   if (!form || !toast) return;
 
-  // Prevent duplicate listener attachments
   if (form.dataset.listenerAttached === "true") return;
   form.dataset.listenerAttached = "true";
 
-  // Initialize EmailJS SDK
   if (window.emailjs && EMAILJS_CONFIG.PUBLIC_KEY && EMAILJS_CONFIG.PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
     emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
   }
@@ -433,7 +433,6 @@ function initContactForm() {
       submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending Liquid Message...';
     }
 
-    // Hide old toast state during active sending
     toast.style.display = 'none';
 
     try {
@@ -444,27 +443,22 @@ function initContactForm() {
           form
         );
 
-        // Show Success Toast
         toast.className = 'form-toast success';
         toast.innerHTML = '<i class="fa-solid fa-circle-check"></i> Success! Your message has been sent directly to Ravi.';
-        toast.style.display = 'block'; // Force display to block
+        toast.style.display = 'block';
         form.reset();
       } else {
         await new Promise(r => setTimeout(r, 1000));
-        
-        // Show Demo Success Toast
         toast.className = 'form-toast success';
-        toast.innerHTML = '<i class="fa-solid fa-circle-check"></i> Demo Mode: Message simulated! (Configure your EmailJS keys in script.js for live delivery).';
-        toast.style.display = 'block'; // Force display to block
+        toast.innerHTML = '<i class="fa-solid fa-circle-check"></i> Demo Mode: Message simulated! (Configure EmailJS keys for live email delivery).';
+        toast.style.display = 'block';
         form.reset();
       }
     } catch (error) {
       console.error('EmailJS Delivery Error:', error);
-      
-      // Show Error Toast with details
       toast.className = 'form-toast error';
-      toast.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Delivery failed: ' + (error.text || error.message || 'Please check your EmailJS keys.');
-      toast.style.display = 'block'; // Force display to block
+      toast.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Delivery failed: ' + (error.text || error.message || 'Check EmailJS keys.');
+      toast.style.display = 'block';
     } finally {
       isSubmitting = false;
 
@@ -473,7 +467,6 @@ function initContactForm() {
         submitBtn.innerHTML = originalBtnText;
       }
 
-      // Hide toast automatically after 7 seconds
       setTimeout(() => {
         toast.style.display = 'none';
       }, 7000);

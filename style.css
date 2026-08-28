@@ -1144,6 +1144,132 @@ img, video, canvas, svg {
 }
 
 /* ==========================================================================
+   CERTIFICATIONS & RESUME ENHANCEMENT STYLES
+   ========================================================================== */
+
+/* CERTIFICATIONS GRID */
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.8rem;
+}
+
+.cert-card {
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cert-icon-wrap {
+  width: 48px;
+  height: 48px;
+  background: rgba(0, 242, 255, 0.1);
+  border: 1px solid var(--border-glass-bright);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
+}
+
+.cert-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.cert-issuer {
+  font-size: 0.85rem;
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.cert-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+/* RESUME SECTION */
+.resume-container-card {
+  padding: 2.2rem;
+}
+
+.resume-hero-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.resume-hero-banner h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.resume-hero-banner p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.resume-banner-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.resume-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.resume-block {
+  margin-bottom: 1.8rem;
+}
+
+.resume-block h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.resume-bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.resume-bullet-list li {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.resume-bullet-list li::before {
+  content: "•";
+  color: var(--accent-cyan);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+@media (max-width: 768px) {
+  .resume-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
    14. RESPONSIVE BREAKPOINTS (SMARTPHONE, TABLET, LAPTOP)
    ========================================================================== */
 

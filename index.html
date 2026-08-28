@@ -38,8 +38,11 @@
         <li><a href="#home" class="nav-link active">Home</a></li>
         <li><a href="#about" class="nav-link">About</a></li>
         <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#certifications" class="nav-link">Certifications</a></li>
         <li><a href="#why-java" class="nav-link">Why Java?</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
+        <!-- DIRECT RESUME PDF LINK IN NAVBAR -->
+        <li><a href="assets/Ravi_Kumar_Gangwar_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-link">Resume</a></li>
         <li><a href="#experience" class="nav-link">Experience</a></li>
         <li><a href="#dsa" class="nav-link">DSA</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
@@ -77,10 +80,18 @@
               <span>View My Projects</span>
               <i class="fa-solid fa-arrow-right"></i>
             </a>
-            <button class="btn btn-secondary glass-btn" id="open-resume-btn">
+
+            <!-- VIEW RESUME DIRECT PDF -->
+            <a href="assets\Ravi Kumar Gangwar 2023-27 Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn glass-btn btn-cyan">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <span>View Resume</span>
+            </a>
+
+            <!-- DOWNLOAD RESUME DIRECT PDF -->
+            <a href="assets\Ravi Kumar Gangwar 2023-27 Resume.pdf" download="Ravi_Kumar_Gangwar_Resume.pdf" class="btn btn-secondary glass-btn">
               <i class="fa-solid fa-file-arrow-down"></i>
               <span>Download Resume</span>
-            </button>
+            </a>
           </div>
         </div>
 
@@ -191,7 +202,7 @@
       </div>
     </section>
 
-    <!-- SECTION 3: SKILLS (UPDATED TECHNICAL STACK) -->
+    <!-- SECTION 3: SKILLS -->
     <section class="section skills-section" id="skills">
       <div class="section-title-wrap text-center">
         <span class="section-badge"><i class="fa-solid fa-laptop-code"></i> Proficiency</span>
@@ -296,7 +307,49 @@
       </div>
     </section>
 
-    <!-- SECTION 4: WHY JAVA & AUTOMATION? -->
+    <!-- SECTION 4: CERTIFICATIONS -->
+    <section class="section certs-section" id="certifications">
+      <div class="section-title-wrap text-center">
+        <span class="section-badge"><i class="fa-solid fa-certificate"></i> Qualifications</span>
+        <h2 class="section-heading">Certifications</h2>
+        <p class="section-sub">Verified credentials listed on official resume.</p>
+        <div class="heading-underline"></div>
+      </div>
+
+      <div class="certs-grid">
+        <!-- Certification 1 -->
+        <div class="glass-card cert-card tilt-card">
+          <div class="cert-icon-wrap">
+            <i class="fa-solid fa-award text-cyan"></i>
+          </div>
+          <h3 class="cert-title">Machine Learning</h3>
+          <p class="cert-issuer"><i class="fa-solid fa-building-columns"></i> IIT Kanpur, Kanpur, UP</p>
+          <p class="cert-desc">Professional certification in Machine Learning algorithms, predictive modeling, and data science concepts.</p>
+        </div>
+
+        <!-- Certification 2 -->
+        <div class="glass-card cert-card tilt-card">
+          <div class="cert-icon-wrap">
+            <i class="fa-solid fa-wand-magic-sparkles text-cyan"></i>
+          </div>
+          <h3 class="cert-title">Use of AI Tools and Prompting</h3>
+          <p class="cert-issuer"><i class="fa-solid fa-microchip"></i> Be10x</p>
+          <p class="cert-desc">Certification in Generative AI tools, prompt engineering, productivity automation, and AI workflows.</p>
+        </div>
+
+        <!-- Certification 3 -->
+        <div class="glass-card cert-card tilt-card">
+          <div class="cert-icon-wrap">
+            <i class="fa-solid fa-laptop-code text-cyan"></i>
+          </div>
+          <h3 class="cert-title">Certificate in Computer Course</h3>
+          <p class="cert-issuer"><i class="fa-solid fa-certificate"></i> National Board of Computer Education, Kichha, Uttarakhand</p>
+          <p class="cert-desc">Foundational computer applications, software usage, and system fundamentals certification.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: WHY JAVA & AUTOMATION? -->
     <section class="section java-section" id="why-java">
       <div class="section-title-wrap text-center">
         <span class="section-badge"><i class="fa-brands fa-java"></i> Core Architecture</span>
@@ -358,7 +411,7 @@
       </div>
     </section>
 
-    <!-- SECTION 5: PROJECTS (INCLUDES ALL LINKEDIN + JAVA PROJECTS) -->
+    <!-- SECTION 6: PROJECTS -->
     <section class="section projects-section" id="projects">
       <div class="section-title-wrap text-center">
         <span class="section-badge"><i class="fa-solid fa-code-fork"></i> Portfolio Showcase</span>
@@ -379,7 +432,7 @@
           
           <h3 class="project-title">AI HR Recruitment Automation</h3>
           <p class="project-description">
-            Automates candidate screening using n8n and an AI Agent. Extracts text from uploaded resumes, evaluates score against job roles, auto-sends interview emails ($\ge 80\%$) or rejection emails ($< 80\%$), and logs data in Google Sheets.
+            Automates candidate screening using n8n and an AI Agent. Extracts text from uploaded resumes, evaluates score against job roles, auto-sends interview emails (when 80% skills matches) or humble rejection emails (skills matches less than 80%), and logs data in Google Sheets.
           </p>
 
           <div class="project-features">
@@ -398,7 +451,7 @@
 
           <div class="project-actions">
             <a href="https://lnkd.in/p/dZiNC-YW" target="_blank" rel="noopener noreferrer" class="btn glass-btn btn-sm btn-cyan">
-              <i class="fa-brands fa-linkedin"></i> View LinkedIn Post
+              <i class="fa-brands fa-linkedin"></i> View 
             </a>
           </div>
         </article>
@@ -413,7 +466,7 @@
           
           <h3 class="project-title">Intelligent Form Routing Agent</h3>
           <p class="project-description">
-            Built during a Mini Hackathon on Agentic AI. Automates support ticket requests: Form submission $\to$ LLM Query Classification $\to$ Smart Category Tagging $\to$ Google Sheets Logging $\to$ Category Email Response.
+            Built during a Mini Hackathon on Agentic AI. Automates support ticket requests: Form submission --> LLM Query Classification --> Smart Category Tagging --> Google Sheets Logging --> Category Email Response.
           </p>
 
           <div class="project-features">
@@ -431,7 +484,7 @@
 
           <div class="project-actions">
             <a href="https://lnkd.in/p/dQaWY3S6" target="_blank" rel="noopener noreferrer" class="btn glass-btn btn-sm btn-cyan">
-              <i class="fa-brands fa-linkedin"></i> View LinkedIn Post
+              <i class="fa-brands fa-linkedin"></i> View 
             </a>
           </div>
         </article>
@@ -464,7 +517,7 @@
 
           <div class="project-actions">
             <a href="https://lnkd.in/p/dbC8Cjmq" target="_blank" rel="noopener noreferrer" class="btn glass-btn btn-sm btn-cyan">
-              <i class="fa-brands fa-linkedin"></i> View LinkedIn Post
+              <i class="fa-brands fa-linkedin"></i> View 
             </a>
           </div>
         </article>
@@ -496,7 +549,7 @@
 
           <div class="project-actions">
             <a href="https://lnkd.in/p/dhh23GcJ" target="_blank" rel="noopener noreferrer" class="btn glass-btn btn-sm btn-cyan">
-              <i class="fa-brands fa-linkedin"></i> View LinkedIn Post
+              <i class="fa-brands fa-linkedin"></i> View 
             </a>
           </div>
         </article>
@@ -605,7 +658,7 @@
       </div>
     </section>
 
-    <!-- SECTION 6: EXPERIENCE & LEARNING JOURNEY -->
+    <!-- SECTION 7: EXPERIENCE & LEARNING JOURNEY (PRESERVED EXACTLY AS PROVIDED) -->
     <section class="section journey-section" id="experience">
       <div class="section-title-wrap text-center">
         <span class="section-badge"><i class="fa-solid fa-timeline"></i> Milestones</span>
@@ -669,7 +722,7 @@
       </div>
     </section>
 
-    <!-- SECTION 7: DSA / PROBLEM SOLVING & INTERACTIVE VISUALIZER -->
+    <!-- SECTION 8: DSA / PROBLEM SOLVING & INTERACTIVE VISUALIZER -->
     <section class="section dsa-section" id="dsa">
       <div class="section-title-wrap text-center">
         <span class="section-badge"><i class="fa-solid fa-brain"></i> Algorithmic Mastery</span>
@@ -756,7 +809,7 @@
       </div>
     </section>
 
-    <!-- SECTION 8: CONTACT -->
+    <!-- SECTION 9: CONTACT -->
     <section class="section contact-section" id="contact">
       <div class="section-title-wrap text-center">
         <span class="section-badge"><i class="fa-solid fa-paper-plane"></i> Get In Touch</span>
@@ -843,40 +896,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- Resume Preview Modal -->
-  <div class="modal-overlay" id="resume-modal">
-    <div class="glass-card modal-content">
-      <button class="modal-close" id="close-resume-btn">&times;</button>
-      
-      <div class="resume-header">
-        <h2>Ravi Kumar Gangwar</h2>
-        <p>Java Developer | Agentic AI & n8n Automation Specialist</p>
-      </div>
-
-      <div class="resume-body">
-        <h3><i class="fa-solid fa-user-graduate text-cyan"></i> Education</h3>
-        <p><strong>B.Tech in Computer Science & Engineering</strong> (Current Student)</p>
-
-        <h3><i class="fa-solid fa-gears text-cyan"></i> Core Competencies</h3>
-        <p>Java, n8n Automation Workflows, Agentic AI, OpenAI LLM Integration, Telegram Bot API, Resume Parsing AI, SQL, JDBC, MySQL, Data Structures & Algorithms, Git, HTML/CSS/JavaScript.</p>
-
-        <h3><i class="fa-solid fa-briefcase text-cyan"></i> Key Projects</h3>
-        <ul>
-          <li><strong>AI HR Recruitment Automation:</strong> n8n AI Agent resume parser and auto decision workflow.</li>
-          <li><strong>Intelligent Form Routing Agent:</strong> Hackathon Agentic AI ticket classifier and router.</li>
-          <li><strong>AI Telegram Assistant Bot:</strong> Conversational Telegram bot powered by LLMs via n8n.</li>
-          <li><strong>E-Bank Management System:</strong> Java Desktop Financial Application with JDBC & MySQL.</li>
-        </ul>
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn btn-primary glass-btn" onclick="window.print()">
-          <i class="fa-solid fa-print"></i> Print / Save as PDF
-        </button>
-      </div>
-    </div>
-  </div>
 
   <!-- EmailJS Browser SDK & Script Engine -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>

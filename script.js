@@ -1,8 +1,8 @@
 /* ==========================================================================
    LIQUID GLASS ENGINE & INTERACTIVE CONTROLLER
    Developer: Ravi Kumar Gangwar (Java Developer)
-   Features: Floating Canvas Particles, Glow Pointer, 3D Tilt, EmailJS
    ========================================================================== */
+
 
 const EMAILJS_CONFIG = {
   PUBLIC_KEY: "4c4h7IjpNBKNE6cXZ",
@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
   init3DTilt();
   initAlgorithmVisualizer();
   initContactForm();
-  initResumeModal();
 });
 
 /* 1. INTERACTIVE LIQUID PARTICLE BACKGROUND CANVAS */
@@ -116,7 +115,7 @@ function initFluidCursor() {
     mouse.y = e.clientY;
 
     const interactiveElements = document.querySelectorAll(
-      '.btn, .nav-link, .brand-droplet, .skill-card, .project-card, .contact-info-card, .dsa-card'
+      '.btn, .nav-link, .brand-droplet, .skill-card, .cert-card, .project-card, .contact-info-card, .dsa-card'
     );
     let foundMagnetic = false;
 
@@ -242,9 +241,9 @@ function initTypingEffect() {
 
   const titles = [
     'Java Developer',
-    'Backend Developer',
-    'Problem Solver',
-    'CSE Engineering Student'
+    'AI Automation Engineer',
+    'n8n Workflow Specialist',
+    'CSE Student'
   ];
 
   let titleIndex = 0;
@@ -298,7 +297,7 @@ function initCounterAnimation() {
         const updateCount = () => {
           count += speed;
           if (count < target) {
-            num.innerText = Math.ceil(count);
+            num.innerText = num.getAttribute('data-count').includes('.') ? count.toFixed(2) : Math.ceil(count);
             setTimeout(updateCount, 30);
           } else {
             num.innerText = target;
@@ -402,7 +401,7 @@ function initAlgorithmVisualizer() {
   generateArray();
 }
 
-/* 8. CONTACT FORM SUBMISSION WITH VISIBLE TOAST FEEDBACK */
+/* 8. CONTACT FORM SUBMISSION */
 let isSubmitting = false;
 
 function initContactForm() {
@@ -450,7 +449,7 @@ function initContactForm() {
       } else {
         await new Promise(r => setTimeout(r, 1000));
         toast.className = 'form-toast success';
-        toast.innerHTML = '<i class="fa-solid fa-circle-check"></i> Demo Mode: Message simulated! (Configure EmailJS keys for live email delivery).';
+        toast.innerHTML = '<i class="fa-solid fa-circle-check"></i> Demo Mode: Message simulated!';
         toast.style.display = 'block';
         form.reset();
       }
@@ -470,29 +469,6 @@ function initContactForm() {
       setTimeout(() => {
         toast.style.display = 'none';
       }, 7000);
-    }
-  });
-}
-
-/* 9. RESUME MODAL HANDLER */
-function initResumeModal() {
-  const modal = document.getElementById('resume-modal');
-  const openBtn = document.getElementById('open-resume-btn');
-  const closeBtn = document.getElementById('close-resume-btn');
-
-  if (!modal || !openBtn || !closeBtn) return;
-
-  openBtn.addEventListener('click', () => {
-    modal.classList.add('active');
-  });
-
-  closeBtn.addEventListener('click', () => {
-    modal.classList.remove('active');
-  });
-
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.remove('active');
     }
   });
 }

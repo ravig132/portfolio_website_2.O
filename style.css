@@ -65,77 +65,26 @@ img, video, canvas, svg {
   max-width: 100%;
 }
 
-/* HIDE DEFAULT CURSOR ON DESKTOP */
-@media (min-width: 769px) {
-  html, body, a, button, input, textarea, select, label, .glass-card, .btn, .nav-link {
-    cursor: none !important;
-  }
-}
-
-/* CYAN/AQUA MAGNETIC GLOW POINTER */
-#cursor-dot {
+/* ==========================================================================
+   DYNAMIC AMBIENT CURSOR RADIAL GLOW FOLLOWER
+   ========================================================================== */
+#cursor-glow {
   position: fixed;
   top: 0;
   left: 0;
-  width: 8px;
-  height: 8px;
-  background: var(--accent-cyan);
+  width: 600px;
+  height: 600px;
   border-radius: 50%;
-  pointer-events: none;
-  z-index: 999999;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 12px var(--accent-cyan), 0 0 25px var(--accent-cyan);
-  transition: width 0.2s, height 0.2s;
-}
-
-#cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid var(--accent-cyan);
-  background: rgba(0, 242, 255, 0.06);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 999998;
-  transform: translate(-50%, -50%);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-              height 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-              border-color 0.3s, background 0.3s, border-radius 0.3s, box-shadow 0.3s;
-  box-shadow: 0 0 20px rgba(0, 242, 255, 0.35), inset 0 0 10px rgba(0, 242, 255, 0.2);
-}
-
-#cursor-ring.is-magnetic {
-  width: 58px;
-  height: 58px;
-  border-color: var(--accent-cyan);
-  background: rgba(0, 242, 255, 0.18);
-  box-shadow: 0 0 35px rgba(0, 242, 255, 0.8), inset 0 0 20px rgba(0, 242, 255, 0.4);
-  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-  animation: liquidWobble 2s ease-in-out infinite alternate;
-}
-
-@keyframes liquidWobble {
-  0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-}
-
-.cursor-trail-node {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 16px;
-  height: 16px;
-  background: linear-gradient(135deg, rgba(0, 242, 255, 0.4), rgba(0, 168, 255, 0.2));
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 999997;
-  transform: translate(-50%, -50%);
-  filter: blur(2px);
-  box-shadow: 0 0 12px rgba(0, 242, 255, 0.4);
+  background: radial-gradient(
+    circle, 
+    rgba(99, 102, 241, 0.15) 0%,   /* Inner Indigo Glow */
+    rgba(6, 182, 212, 0.05) 50%,   /* Outer Cyan Haze */
+    transparent 70%
+  );
+  pointer-events: none;             /* Prevents blocking clicks or selection */
+  transform: translate(-50%, -50%); /* Centers 600px circle on mouse tip */
+  z-index: 1;                       /* Layered above dark background */
+  transition: transform 0.1s ease-out; /* Smooth trailing spring effect */
 }
 
 /* BACKGROUND CANVAS */
@@ -423,45 +372,96 @@ img, video, canvas, svg {
   flex-wrap: wrap;
 }
 
-/* 3D Water Droplet Visual with Photograph */
+/* 3D Frosted Ice Cube Visual with Photograph */
 .hero-visual {
   display: flex;
   justify-content: center;
   position: relative;
 }
 
-.droplet-container {
+.ice-cube-container {
   position: relative;
   width: 320px;
   height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
+  perspective: 1000px;
 }
 
-.water-droplet-3d {
+/* Cold Icy Glow Rings */
+.ice-ring {
+  position: absolute;
+  border-radius: 40px;
+  border: 1px dashed rgba(0, 242, 255, 0.3);
+  pointer-events: none;
+  animation: iceRingRotate 25s linear infinite;
+}
+
+.ice-ring.ring-1 {
+  width: 310px;
+  height: 310px;
+  box-shadow: 0 0 35px rgba(0, 242, 255, 0.18);
+}
+
+.ice-ring.ring-2 {
+  width: 335px;
+  height: 335px;
+  border: 1px dotted rgba(255, 255, 255, 0.25);
+  animation-direction: reverse;
+  animation-duration: 38s;
+}
+
+@keyframes iceRingRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Central 3D Animated Ice Cube Crystal Block */
+.ice-cube-3d {
   width: 270px;
   height: 270px;
-  background: linear-gradient(135deg, rgba(0, 242, 255, 0.25), rgba(0, 85, 255, 0.15));
-  border-radius: 50% 50% 50% 5%;
-  transform: rotate(-45deg);
-  border: 2px solid rgba(0, 242, 255, 0.5);
-  box-shadow: inset -10px -10px 30px rgba(0, 85, 255, 0.4),
-              inset 10px 10px 30px rgba(255, 255, 255, 0.4),
-              0 20px 50px rgba(0, 242, 255, 0.3);
-  backdrop-filter: blur(12px);
-  animation: dropletFloat 6s ease-in-out infinite alternate;
+  border-radius: 28px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25),
+    0 20px 50px rgba(0, 0, 0, 0.65),
+    0 0 40px rgba(0, 242, 255, 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transform-style: preserve-3d;
+  animation: iceCubeFloat 6.5s ease-in-out infinite alternate;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
 }
 
-@keyframes dropletFloat {
-  0% { transform: rotate(-45deg) translateY(0px) scale(1); border-radius: 50% 50% 50% 5%; }
-  50% { transform: rotate(-43deg) translateY(-15px) scale(1.02); border-radius: 45% 55% 45% 10%; }
-  100% { transform: rotate(-47deg) translateY(5px) scale(0.98); border-radius: 55% 45% 55% 5%; }
+.ice-cube-3d:hover {
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4),
+    0 25px 60px rgba(0, 0, 0, 0.75),
+    0 0 55px rgba(0, 242, 255, 0.4);
 }
 
-.portrait-droplet {
+@keyframes iceCubeFloat {
+  0% {
+    transform: perspective(1000px) rotateX(4deg) rotateY(-5deg) translateY(0px);
+  }
+  50% {
+    transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-12px);
+  }
+  100% {
+    transform: perspective(1000px) rotateX(6deg) rotateY(-7deg) translateY(6px);
+  }
+}
+
+.portrait-ice-cube {
   position: relative;
   overflow: hidden;
   display: flex;
@@ -469,50 +469,100 @@ img, video, canvas, svg {
   justify-content: center;
 }
 
+/* User Portrait inside the Ice Cube - Crystal Clear & Vibrant */
 .hero-portrait {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
-  transform: rotate(45deg) scale(1.28);
-  filter: brightness(1.05) contrast(1.05);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  object-position: center 8%;
+  border-radius: 26px;
+  filter: contrast(1.05) saturate(1.03);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  will-change: transform;
 }
 
-.portrait-droplet:hover .hero-portrait {
-  transform: rotate(45deg) scale(1.36);
+.ice-cube-3d:hover .hero-portrait {
+  transform: scale(1.06);
+  filter: contrast(1.07) saturate(1.05);
 }
 
-.droplet-glass-overlay {
+/* Subtle bottom vignette only behind badges (face remains 100% crystal clear) */
+.ice-frost-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(0, 242, 255, 0.25), rgba(0, 85, 255, 0.15));
-  mix-blend-mode: color-dodge;
+  inset: 0;
+  border-radius: 26px;
+  background: linear-gradient(180deg, transparent 65%, rgba(5, 12, 26, 0.5) 100%);
   pointer-events: none;
+  z-index: 2;
 }
 
+/* Disabled facet to eliminate any whitish film over the face */
+.ice-prism-facet {
+  display: none;
+}
+
+/* Dynamic ice specular sheen sweep ONLY on hover */
+.ice-specular-shine {
+  position: absolute;
+  top: -120%;
+  left: -120%;
+  width: 340%;
+  height: 340%;
+  background: linear-gradient(
+    125deg,
+    transparent 45%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 55%
+  );
+  transform: translateY(-100%) rotate(25deg);
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.ice-cube-3d:hover .ice-specular-shine {
+  opacity: 1;
+  transform: translateY(100%) rotate(25deg);
+}
+
+/* Inner 3D ice bevel chamfer line along the edge */
+.ice-cube-bevel {
+  position: absolute;
+  inset: 5px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Floating Badges pinned at bottom center */
 .hero-photo-badges {
   position: absolute;
-  bottom: 15px;
-  transform: rotate(45deg);
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   gap: 0.5rem;
   z-index: 5;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.ice-cube-3d:hover .hero-photo-badges {
+  transform: translateX(-50%) translateY(-3px) scale(1.04);
 }
 
 .photo-badge {
-  background: rgba(5, 9, 20, 0.85);
+  background: rgba(5, 9, 20, 0.88);
   border: 1px solid var(--border-glass-bright);
   color: var(--accent-cyan);
-  padding: 0.25rem 0.6rem;
+  padding: 0.28rem 0.7rem;
   border-radius: var(--radius-full);
   font-size: 0.75rem;
   font-weight: 600;
   backdrop-filter: blur(8px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45);
 }
 
 .orbiting-node {
@@ -571,6 +621,7 @@ img, video, canvas, svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 15%;
 }
 
 .about-text {
@@ -1280,11 +1331,29 @@ img, video, canvas, svg {
   }
   .hero-name { font-size: 2.8rem; }
   .section { padding: 5rem 1.5rem; }
+
+  .ice-cube-container,
+  .droplet-container {
+    width: 285px;
+    height: 285px;
+  }
+
+  .ice-cube-3d,
+  .water-droplet-3d {
+    width: 245px;
+    height: 245px;
+    border-radius: 24px;
+  }
+
+  .ice-ring.ring-1 { width: 275px; height: 275px; }
+  .ice-ring.ring-2 { width: 295px; height: 295px; }
 }
 
 @media (max-width: 768px) {
-  /* DISABLE DESKTOP CURSOR ON TOUCH SCREENS */
-  #cursor-dot, #cursor-ring, .cursor-trail-node, #cursor-trail-wrap {
+  /* DISABLE DESKTOP RADIAL GLOW ON TOUCH SCREENS */
+  #cursor-glow,
+  #ambient-radial-light, .ambient-radial-light,
+  #cursor-core-pointer, .cursor-core-pointer {
     display: none !important;
   }
 
@@ -1408,14 +1477,31 @@ img, video, canvas, svg {
     max-width: 280px;
   }
 
+  .ice-cube-container,
   .droplet-container {
     width: 260px;
     height: 260px;
+    margin: 0 auto;
   }
 
+  .ice-cube-3d,
   .water-droplet-3d {
-    width: 210px;
-    height: 210px;
+    width: 220px;
+    height: 220px;
+    border-radius: 22px;
+  }
+
+  .ice-ring.ring-1 { width: 250px; height: 250px; }
+  .ice-ring.ring-2 { width: 270px; height: 270px; }
+
+  .hero-photo-badges {
+    bottom: 10px;
+    gap: 0.4rem;
+  }
+
+  .photo-badge {
+    padding: 0.22rem 0.55rem;
+    font-size: 0.7rem;
   }
 
   .orbiting-node {
@@ -1587,6 +1673,28 @@ img, video, canvas, svg {
 @media (max-width: 480px) {
   .hero-name {
     font-size: 2.0rem;
+  }
+
+  .ice-cube-container,
+  .droplet-container {
+    width: 225px;
+    height: 225px;
+  }
+
+  .ice-cube-3d,
+  .water-droplet-3d {
+    width: 195px;
+    height: 195px;
+    border-radius: 18px;
+  }
+
+  .ice-ring.ring-1 { width: 215px; height: 215px; }
+  .ice-ring.ring-2 { width: 232px; height: 232px; }
+
+  .orbiting-node {
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
   }
 
   .stats-grid {

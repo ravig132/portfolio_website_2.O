@@ -12,13 +12,14 @@ const EMAILJS_CONFIG = {
 
 document.addEventListener('DOMContentLoaded', () => {
   initBackgroundCanvas();
-  initFluidCursor();
+  initCursorGlow();
   initNavbarScroll();
   initTypingEffect();
   initCounterAnimation();
   init3DTilt();
   initAlgorithmVisualizer();
   initContactForm();
+  initIceCubeInteractivity();
 });
 
 /* 1. INTERACTIVE LIQUID PARTICLE BACKGROUND CANVAS */
@@ -75,111 +76,15 @@ function initBackgroundCanvas() {
   animate();
 }
 
-/* 2. DYNAMIC FLUID GLOW POINTER ENHANCEMENT */
-function initFluidCursor() {
-  const dot = document.getElementById('cursor-dot');
-  const ring = document.getElementById('cursor-ring');
-  let trailContainer = document.getElementById('cursor-trail-wrap');
-  
-  if (!dot || !ring) return;
-
-  const trailNodes = [];
-  const trailCount = 6;
-  
-  if (!trailContainer) {
-    trailContainer = document.createElement('div');
-    trailContainer.id = 'cursor-trail-wrap';
-    document.body.appendChild(trailContainer);
-  }
-  trailContainer.innerHTML = '';
-
-  for (let i = 0; i < trailCount; i++) {
-    const node = document.createElement('div');
-    node.className = 'cursor-trail-node';
-    trailContainer.appendChild(node);
-    trailNodes.push({
-      el: node,
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-      scale: (1 - i * 0.14)
-    });
-  }
-
-  let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-  let posDot = { x: mouse.x, y: mouse.y };
-  let posRing = { x: mouse.x, y: mouse.y };
-  let magneticTarget = null;
+/* 2. DYNAMIC AMBIENT CURSOR GLOW FOLLOWER */
+function initCursorGlow() {
+  const glow = document.getElementById('cursor-glow');
+  if (!glow) return;
 
   document.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-
-    const interactiveElements = document.querySelectorAll(
-      '.btn, .nav-link, .brand-droplet, .skill-card, .cert-card, .project-card, .contact-info-card, .dsa-card'
-    );
-    let foundMagnetic = false;
-
-    interactiveElements.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const dist = Math.hypot(mouse.x - centerX, mouse.y - centerY);
-
-      if (dist < 70) {
-        foundMagnetic = true;
-        magneticTarget = {
-          x: centerX + (mouse.x - centerX) * 0.3,
-          y: centerY + (mouse.y - centerY) * 0.3
-        };
-      }
-    });
-
-    if (!foundMagnetic) {
-      magneticTarget = null;
-    }
+    glow.style.left = `${e.clientX}px`;
+    glow.style.top = `${e.clientY}px`;
   });
-
-  function render() {
-    posDot.x += (mouse.x - posDot.x) * 0.45;
-    posDot.y += (mouse.y - posDot.y) * 0.45;
-
-    const targetX = magneticTarget ? magneticTarget.x : mouse.x;
-    const targetY = magneticTarget ? magneticTarget.y : mouse.y;
-
-    posRing.x += (targetX - posRing.x) * 0.16;
-    posRing.y += (targetY - posRing.y) * 0.16;
-
-    dot.style.left = `${posDot.x}px`;
-    dot.style.top = `${posDot.y}px`;
-
-    ring.style.left = `${posRing.x}px`;
-    ring.style.top = `${posRing.y}px`;
-
-    if (magneticTarget) {
-      ring.classList.add('is-magnetic');
-    } else {
-      ring.classList.remove('is-magnetic');
-    }
-
-    let prevX = posRing.x;
-    let prevY = posRing.y;
-
-    trailNodes.forEach((node, index) => {
-      node.x += (prevX - node.x) * (0.35 - index * 0.04);
-      node.y += (prevY - node.y) * (0.35 - index * 0.04);
-
-      node.el.style.left = `${node.x}px`;
-      node.el.style.top = `${node.y}px`;
-      node.el.style.transform = `translate(-50%, -50%) scale(${node.scale})`;
-
-      prevX = node.x;
-      prevY = node.y;
-    });
-
-    requestAnimationFrame(render);
-  }
-
-  requestAnimationFrame(render);
 }
 
 /* 3. NAVBAR SCROLL & MOBILE MENU TOGGLE */
@@ -470,5 +375,29 @@ function initContactForm() {
         toast.style.display = 'none';
       }, 7000);
     }
+  });
+}
+
+/* 9. HERO 3D ICE CUBE INTERACTIVITY */
+function initIceCubeInteractivity() {
+  const container = document.querySelector('.ice-cube-container') || document.querySelector('.droplet-container');
+  const iceCube = document.querySelector('.ice-cube-3d') || document.querySelector('.water-droplet-3d');
+  if (!container || !iceCube) return;
+
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - (rect.left + rect.width / 2);
+    const y = e.clientY - (rect.top + rect.height / 2);
+
+    const tiltX = (y / (rect.height / 2)) * -14;
+    const tiltY = (x / (rect.width / 2)) * 14;
+
+    iceCube.style.transform = `perspective(800px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) scale3d(1.04, 1.04, 1.04)`;
+    iceCube.style.animationPlayState = 'paused';
+  });
+
+  container.addEventListener('mouseleave', () => {
+    iceCube.style.transform = '';
+    iceCube.style.animationPlayState = 'running';
   });
 }

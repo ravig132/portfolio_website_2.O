@@ -200,8 +200,9 @@ const EMAILJS_CONFIG = {
 ---
 
 ## 5. REPOSITORY ASSETS DIRECTORY
-- `assets/rj_logo.svg`: Primary vector crystal water droplet logo & favicon with the 'RJ' (Ravi.Java) monogram.
-- `assets/favicon.svg`: Synchronized vector crystal water droplet favicon (copy of rj_logo.svg).
+- `assets/favicon_rj.svg`: Primary high-fidelity vector crystal water droplet logo & favicon with the 'RJ' (Ravi.Java) monogram.
+- `assets/rj_logo.svg`: Synchronized vector crystal water droplet logo (copy of favicon_rj.svg).
+- `assets/favicon.svg`: Synchronized vector crystal water droplet favicon (copy of favicon_rj.svg).
 - `assets/favicon.png`: High-resolution 3D luminous crystal glass orb featuring the illuminated 'RJ' (Ravi.Java) tech monogram.
 - `assets/ravi_java_brand.png`: Full developer brand artwork with 3D crystal droplet and 'Ravi.Java DEVELOPER BRAND' typography.
 - `assets/my_image.png`: High-resolution photograph of Ravi Kumar Gangwar used in Hero 3D Ice Cube and About Avatar.

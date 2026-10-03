@@ -161,7 +161,13 @@
   6. **Ticket Booking System** (Java, MySQL, JDBC, SQL - GitHub link)
   7. **Liquid Glass Portfolio Website** (HTML5, CSS3, JavaScript - GitHub & Live Preview)
 
-### Learning Journey Timeline (`#experience`)
+### Work Experience Section (`#experience`)
+- 3 Glassmorphic 3D Tilt Cards with cyan droplet glow:
+  1. **Java Backend Developer Intern** — Apex Software Labs (Remote / New Delhi)
+  2. **AI Automation Engineer Intern** — Cognitive Workflows & Systems (Remote)
+  3. **Software & Automation Freelancer** — Self-Employed / Client Projects (Hybrid / Remote)
+
+### Learning Journey Timeline (`#journey`)
 - Glowing vertical liquid line down the center (`#timeline-line`).
 - Milestones:
   - **2023**: Started B.Tech CSE

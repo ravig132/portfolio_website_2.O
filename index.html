@@ -24,6 +24,81 @@
 </head>
 <body>
 
+  <!-- FULL-SCREEN PRELOADER / SPLASH SCREEN -->
+  <aside id="preloader" class="pl-overlay" aria-label="Loading portfolio">
+    
+    <!-- Background "Java Running" Code & Terminal Stream Layer (behind logo) -->
+    <div class="pl-code-bg" id="pl-code-bg" aria-hidden="true">
+      <div class="pl-code-editor">
+        <div class="pl-code-header">
+          <span class="pl-code-dot red"></span>
+          <span class="pl-code-dot yellow"></span>
+          <span class="pl-code-dot green"></span>
+          <span class="pl-code-file"><i class="fa-brands fa-java"></i> Portfolio.java</span>
+        </div>
+        <pre class="pl-code-stream" id="pl-code-stream"></pre>
+      </div>
+
+      <!-- Simulated Floating Console Output -->
+      <div class="pl-console-panel" id="pl-console-panel">
+        <div class="pl-console-header">
+          <i class="fa-solid fa-terminal"></i> Build Terminal &amp; Module Loader
+        </div>
+        <div class="pl-console-output" id="pl-console-output"></div>
+      </div>
+      
+      <!-- Vignette Overlay to preserve central focal point -->
+      <div class="pl-vignette"></div>
+    </div>
+
+    <!-- Liquid Canvas Particles specific to loader -->
+    <canvas id="pl-particles" class="pl-particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- Foreground Content -->
+    <div class="pl-content" id="pl-content">
+      
+      <!-- Logo Container with Liquid Crystal Glass Ring & 3D Tilt Wrapper -->
+      <div class="pl-logo-wrapper" id="pl-logo-wrapper">
+        <div class="pl-glass-ring" id="pl-glass-ring"></div>
+        <div class="pl-glow-orb" id="pl-glow-orb"></div>
+        <img src="assets/favicon.png" alt="Ravi.Java Logo" class="pl-logo-img" id="pl-logo-img">
+      </div>
+
+      <!-- Welcome Message with Typing Effect & Stage Glitch -->
+      <h2 class="pl-welcome-title" id="pl-welcome-title">
+        <span class="pl-welcome-text" id="pl-welcome-text"></span>
+        <span class="pl-welcome-cursor">|</span>
+      </h2>
+
+      <!-- Terminal Status Console with Blinking Underscore -->
+      <div class="pl-status-wrapper">
+        <span class="pl-status-line" id="pl-status-line" role="status" aria-live="polite">> Initializing Java environment...</span>
+        <span class="pl-status-cursor">_</span>
+      </div>
+
+      <!-- Slim Glass Progress Bar & Counter -->
+      <div class="pl-progress-container">
+        <div class="pl-progress-bar">
+          <div class="pl-progress-fill" id="pl-progress-fill"></div>
+        </div>
+        <span class="pl-counter" id="pl-counter">0%</span>
+      </div>
+
+      <div class="pl-hint-text" id="pl-hint-text">Hold <kbd>Space</kbd> or click &amp; hold to boost</div>
+    </div>
+
+    <!-- Floating Interactive Controls (Skip Button & Sound Toggle) -->
+    <button class="pl-sound-btn" id="pl-sound-btn" type="button" aria-label="Toggle typing sound fx">
+      <i class="fa-solid fa-volume-xmark" id="pl-sound-icon"></i>
+      <span class="pl-sound-text" id="pl-sound-text">Sound: OFF</span>
+    </button>
+
+    <button class="pl-skip-btn" id="pl-skip-btn" type="button" aria-label="Skip splash screen">
+      <span>Skip</span> <i class="fa-solid fa-forward-step"></i>
+    </button>
+
+  </aside>
+
   <!-- Floating Liquid Particle Canvas Background -->
   <canvas id="liquid-canvas"></canvas>
   
@@ -50,6 +125,7 @@
         <!-- DIRECT RESUME PDF LINK IN NAVBAR -->
         <li><a href="assets/Ravi_Kumar_Gangwar_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-link">Resume</a></li>
         <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#hackathons" class="nav-link">Hackathons</a></li>
         <li><a href="#dsa" class="nav-link">DSA</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
@@ -779,7 +855,78 @@
       </div>
     </section>
 
-    <!-- SECTION 8: LEARNING JOURNEY (PRESERVED EXACTLY AS PROVIDED) -->
+    <!-- SECTION 8: HACKATHONS & BUILDATHONS -->
+    <section class="section hackathons-section" id="hackathons">
+      <div class="section-title-wrap text-center">
+        <span class="section-badge"><i class="fa-solid fa-trophy"></i> Competitions</span>
+        <h2 class="section-heading">Hackathons &amp; Buildathons</h2>
+        <p class="section-sub">Competitive hackathons, AI innovation challenges, and rapid sprint deliverables.</p>
+        <div class="heading-underline"></div>
+      </div>
+
+      <div class="experience-grid">
+        
+        <!-- Hackathon Card 1: Machine Learning Hackathon at IIT Kanpur -->
+        <article class="glass-card experience-card tilt-card">
+          <div class="experience-glow"></div>
+          
+          <div class="experience-top-bar">
+            <span class="experience-type-badge"><i class="fa-solid fa-trophy"></i> Hackathon</span>
+            <div class="experience-icon-badge"><i class="fa-solid fa-award"></i></div>
+          </div>
+
+          <h3 class="experience-role-title">Machine Learning Hackathon</h3>
+          <div class="experience-company">
+            <i class="fa-solid fa-building-columns"></i>
+            <span>Indian Institute of Technology (IIT), Kanpur</span>
+          </div>
+
+          <div class="experience-meta">
+            <span><i class="fa-regular fa-calendar"></i> 28th March 2025</span>
+            <span><i class="fa-solid fa-handshake"></i> Techgyan Technologies</span>
+          </div>
+
+          <p class="experience-desc">
+            Demonstrated exceptional skill, creativity, and problem-solving ability in successfully completing the competitive Machine Learning Hackathon held at IIT Kanpur in association with Techgyan Technologies.
+          </p>
+
+          <ul class="experience-features">
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Demonstrated problem-solving ability in developing ML solutions within competitive sprint timeframes.</span>
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Applied data processing, machine learning models, and algorithmic techniques to solve problem statements.</span>
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Awarded official Certificate of Participation (T-IITK-108) recognizing technical dedication and innovation.</span>
+            </li>
+          </ul>
+
+          <div class="experience-tech-stack">
+            <span class="tech-badge">Machine Learning</span>
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">Data Science</span>
+            <span class="tech-badge">Innovation</span>
+            <span class="tech-badge">Problem Solving</span>
+          </div>
+
+          <div class="project-actions cert-actions">
+            <a href="https://lnkd.in/p/gFmMJ2zi" target="_blank" rel="noopener noreferrer" class="btn glass-btn btn-sm btn-cyan">
+              <i class="fa-brands fa-linkedin"></i> View Credential
+            </a>
+            <a href="assets/IIT_Kanpur_Hackathon_Certificate.png" target="_blank" rel="noopener noreferrer" class="btn glass-btn btn-sm">
+              <i class="fa-solid fa-certificate"></i> View Certificate
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION 9: LEARNING JOURNEY (PRESERVED EXACTLY AS PROVIDED) -->
     <section class="section journey-section" id="journey">
       <div class="section-title-wrap text-center">
         <span class="section-badge"><i class="fa-solid fa-timeline"></i> Milestones</span>

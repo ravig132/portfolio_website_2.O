@@ -152,7 +152,7 @@
   6. Automated Comms
 
 ### Featured Projects (`#projects`)
-- 7 Featured Projects:
+- 8 Featured Projects:
   1. **AI HR Recruitment Automation** (n8n, AI Agent, Resume Parsing, Google Sheets, Auto Emails - LinkedIn link)
   2. **Intelligent Form Routing Agent** (Agentic AI Hackathon, OpenAI LLM, Routing - LinkedIn link)
   3. **AI Telegram Assistant Bot** (Telegram API, BotFather, n8n, LLM - LinkedIn link)
@@ -160,6 +160,7 @@
   5. **E-Bank Management System** (Java, Swing, JDBC, MySQL - GitHub link)
   6. **Ticket Booking System** (Java, MySQL, JDBC, SQL - GitHub link)
   7. **Liquid Glass Portfolio Website** (HTML5, CSS3, JavaScript - GitHub & Live Preview)
+  8. **CRUD Project – Spring Boot** (Java, Spring Boot - GitHub link)
 
 ### Work Experience Section (`#experience`)
 - 3 Glassmorphic 3D Tilt Cards with cyan droplet glow:

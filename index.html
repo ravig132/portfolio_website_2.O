@@ -17,7 +17,7 @@
   <!-- Typography & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <link rel="stylesheet" href="style.css">
@@ -1214,8 +1214,86 @@
     </div>
   </footer>
 
+  <!-- ========================================================================
+       PORTFOLIO CHATBOT WIDGET (Compiler v1.0)
+       ======================================================================== -->
+  <div id="rg-chat-widget-root" aria-label="Compiler Portfolio Assistant">
+    <!-- Floating Launcher Button with </> Badge -->
+    <button id="rg-chat-launcher" type="button" aria-label="Open Compiler Assistant" aria-expanded="false" aria-controls="rg-chat-window">
+      <span class="rg-chat-launcher-glow-ring" aria-hidden="true"></span>
+      <img src="assets/favicon.png" alt="Compiler Logo" class="rg-chat-launcher-icon" width="36" height="36">
+      <span class="rg-chat-launcher-badge" aria-hidden="true">&lt;/&gt;</span>
+      <span class="rg-chat-tooltip" role="tooltip">Run a query on Ravi</span>
+    </button>
+
+    <!-- Glassmorphism Chat Window -->
+    <section id="rg-chat-window" role="dialog" aria-modal="true" aria-label="Compiler" aria-hidden="true">
+      <!-- Terminal Scanline Effect Overlay -->
+      <div class="rg-chat-scanlines" aria-hidden="true"></div>
+
+      <!-- Header -->
+      <header class="rg-chat-header">
+        <div class="rg-chat-header-brand">
+          <div class="rg-chat-header-logo-wrap">
+            <img src="assets/favicon.png" alt="Compiler Logo" class="rg-chat-header-logo" width="24" height="24">
+          </div>
+          <div class="rg-chat-header-info">
+            <h3 class="rg-chat-header-title">Compiler</h3>
+            <div class="rg-chat-status-wrap">
+              <span class="rg-chat-status-dot" aria-hidden="true"></span>
+              <span id="rg-chat-status-text" class="rg-chat-status-mono">v1.0 | Ravi.Java</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rg-chat-header-actions">
+          <!-- Web Audio Sound FX Toggle (OFF by default) -->
+          <button id="rg-chat-sound-btn" class="rg-chat-header-btn" type="button" aria-label="Toggle typing sound" title="Sound: OFF">
+            <i id="rg-chat-sound-icon" class="fa-solid fa-volume-xmark" aria-hidden="true"></i>
+          </button>
+          <!-- Clear Chat Button -->
+          <button id="rg-chat-clear-btn" class="rg-chat-header-btn" type="button" aria-label="Clear chat history" title="Clear chat">
+            <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
+          </button>
+          <!-- Close Window Button -->
+          <button id="rg-chat-close-btn" class="rg-chat-header-btn" type="button" aria-label="Close chat window" title="Close chat">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Message History Container -->
+      <div id="rg-chat-messages" role="log" aria-live="polite" aria-relevant="additions text">
+        <!-- Rendered dynamically by chatbot.js -->
+      </div>
+
+      <!-- Floating New Message Notification Pill -->
+      <button id="rg-chat-new-msg-pill" class="rg-chat-new-msg-pill" type="button" aria-label="Scroll to newest message" style="display:none;">
+        <i class="fa-solid fa-arrow-down" aria-hidden="true"></i>
+        <span id="rg-chat-new-msg-text">New message ↓</span>
+      </button>
+
+      <!-- Input Bar -->
+      <footer class="rg-chat-input-bar">
+        <div class="rg-chat-input-wrap">
+          <textarea id="rg-chat-input" rows="1" maxlength="300" placeholder="Ask or type a command (/help)..." aria-label="Type your message"></textarea>
+          <button id="rg-chat-send-btn" type="button" aria-label="Send query">
+            <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="rg-chat-input-meta">
+          <span id="rg-chat-hint-text" class="rg-chat-hint">Enter to send • Shift+Enter for new line</span>
+          <span id="rg-chat-char-counter" aria-label="Character limit">0/300</span>
+        </div>
+      </footer>
+    </section>
+  </div>
+
   <!-- EmailJS Browser SDK & Script Engine -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script src="script.js"></script>
+  <!-- Portfolio Chatbot Engine -->
+  <script src="chatbot-knowledge.js"></script>
+  <script src="chatbot.js"></script>
 </body>
 </html>

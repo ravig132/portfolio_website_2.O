@@ -122,18 +122,20 @@
   - `100+` Problems Solved
 
 ### Technical Skills Grid (`#skills`)
-- 11 Featured Tech Cards:
+- 13 Featured Tech Cards:
   1. **Java** (PRIMARY badge, Collections, OOP, Multithreading, Swing)
-  2. **n8n Workflows** (Event-Driven Automation, Webhooks, Custom Nodes)
-  3. **Agentic AI & LLMs** (OpenAI API, AI Agents, Query Classification)
-  4. **Telegram Bot API** (BotFather, Automated Messaging)
-  5. **Resume Parsing AI** (PDF Extraction, Candidate Scoring)
-  6. **SQL & MySQL** (Schema Design, Joins, Indexes)
-  7. **JDBC** (PreparedStatements, Transactions)
-  8. **Google Sheets API** (Data Logging, Sync)
-  9. **Git & GitHub** (Version Control, Branching)
-  10. **Web Stack** (HTML5, CSS3, JavaScript ES6+)
-  11. **DSA** (Algorithmic Optimization, Complexity Analysis)
+  2. **Spring Core** (IoC Container, Dependency Injection, Bean Lifecycle, Annotations)
+  3. **Spring Boot** (RESTful APIs, Auto-Configuration, Spring Data JPA, Embedded Tomcat)
+  4. **n8n Workflows** (Event-Driven Automation, Webhooks, Custom Nodes)
+  5. **Agentic AI & LLMs** (OpenAI API, AI Agents, Query Classification)
+  6. **Telegram Bot API** (BotFather, Automated Messaging)
+  7. **Resume Parsing AI** (PDF Extraction, Candidate Scoring)
+  8. **SQL & MySQL** (Schema Design, Joins, Indexes)
+  9. **JDBC** (PreparedStatements, Transactions)
+  10. **Google Sheets API** (Data Logging, Sync)
+  11. **Git & GitHub** (Version Control, Branching)
+  12. **Web Stack** (HTML5, CSS3, JavaScript ES6+)
+  13. **DSA** (Algorithmic Optimization, Complexity Analysis)
 
 ### Certifications (`#certifications`)
 - 3 Verified Credentials:

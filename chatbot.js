@@ -28,7 +28,8 @@
   const WELCOME_RATE = 1;                  // Speech rate (0.1 to 10)
   const WELCOME_PITCH = 1;                 // Speech pitch (0 to 2)
   const WELCOME_VOLUME = 1;                // Speech volume (0 to 1)
-  const WELCOME_ONCE_PER_VISIT = true;     // Speak once per page visit (in-memory flag)
+  const WELCOME_ONCE_PER_VISIT = false;    // false = speak on EVERY open; true = speak once per visit
+  const WELCOME_PREWARM = true;            // Pre-cache best English voice ahead of time on idle
 
   // ==========================================================================
   // IN-MEMORY STATE (No localStorage, No sessionStorage)
@@ -39,7 +40,9 @@
   let isRevealing = false;
   let hasBooted = false;
   let isBooting = false;
-  let hasSpokenWelcome = false;            // In-memory flag for WELCOME_ONCE_PER_VISIT
+  let hasSpokenWelcome = false;            // Used only if WELCOME_ONCE_PER_VISIT is enabled
+  let cachedVoice = null;                  // Pre-warmed voice reference
+  let prebuiltUtterance = null;            // Pre-built utterance template ahead of time
   let currentLang = 'en';                  // Tracked sticky language: 'en' | 'hi' | 'hinglish'
   let lastUserMessageText = '';
   let lastUserMessageTime = 0;
@@ -91,8 +94,66 @@
   }
 
   /**
+   * Create fresh SpeechSynthesisUtterance instance with configured parameters
+   */
+  function createWelcomeUtterance(voice) {
+    const utterance = new SpeechSynthesisUtterance(WELCOME_SPEECH_TEXT);
+    utterance.rate = WELCOME_RATE;
+    utterance.pitch = WELCOME_PITCH;
+    utterance.volume = WELCOME_VOLUME;
+    utterance.lang = WELCOME_LANG;
+    if (voice) {
+      utterance.voice = voice;
+    }
+    return utterance;
+  }
+
+  /**
+   * Pre-warm voice lookup ahead of time on idle without playing any sound
+   */
+  function prewarmVoices() {
+    if (!WELCOME_PREWARM) return;
+    try {
+      if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') return;
+      const updateCache = () => {
+        try {
+          const voices = window.speechSynthesis.getVoices();
+          if (voices && voices.length > 0) {
+            cachedVoice = getBestEnglishVoice(voices);
+            prebuiltUtterance = createWelcomeUtterance(cachedVoice);
+          }
+        } catch (e) {}
+      };
+
+      updateCache();
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.addEventListener('voiceschanged', updateCache, { once: true });
+      }
+    } catch (e) {}
+  }
+
+  /**
+   * Clone pre-warmed utterance or create fresh instance
+   */
+  function cloneOrNewUtterance(voice) {
+    const v = voice || cachedVoice;
+    if (prebuiltUtterance) {
+      const u = new SpeechSynthesisUtterance(prebuiltUtterance.text);
+      u.rate = prebuiltUtterance.rate;
+      u.pitch = prebuiltUtterance.pitch;
+      u.volume = prebuiltUtterance.volume;
+      u.lang = prebuiltUtterance.lang;
+      if (v || prebuiltUtterance.voice) {
+        u.voice = v || prebuiltUtterance.voice;
+      }
+      return u;
+    }
+    return createWelcomeUtterance(v);
+  }
+
+  /**
    * Web Speech API: Speak welcome phrase out loud in parallel on chat open
-   * Fails silently if unsupported or blocked by browser policies.
+   * Executes synchronously on EVERY open with zero UI blocking or artificial delays.
    */
   function playWelcomeVoice() {
     if (WELCOME_ONCE_PER_VISIT && hasSpokenWelcome) return;
@@ -102,50 +163,46 @@
         return;
       }
 
-      // Always cancel any prior speech before starting
+      // 1. Cancel any prior speech immediately
       window.speechSynthesis.cancel();
 
-      const utterance = new SpeechSynthesisUtterance(WELCOME_SPEECH_TEXT);
-      utterance.rate = WELCOME_RATE;
-      utterance.pitch = WELCOME_PITCH;
-      utterance.volume = WELCOME_VOLUME;
-      utterance.lang = WELCOME_LANG;
-
+      // 2. Resolve active voice (pre-warmed or immediate lookup; falls back to default without waiting)
       const voices = window.speechSynthesis.getVoices();
-      if (voices && voices.length > 0) {
-        const bestVoice = getBestEnglishVoice(voices);
-        if (bestVoice) utterance.voice = bestVoice;
-        window.speechSynthesis.speak(utterance);
-        hasSpokenWelcome = true;
-      } else {
-        let hasSpoken = false;
-        const onVoicesChanged = () => {
-          if (hasSpoken || !isOpen) return;
-          hasSpoken = true;
-          try {
-            const vList = window.speechSynthesis.getVoices();
-            const bVoice = getBestEnglishVoice(vList);
-            if (bVoice) utterance.voice = bVoice;
-            window.speechSynthesis.speak(utterance);
-            hasSpokenWelcome = true;
-          } catch (err) {}
-        };
+      const activeVoice = cachedVoice || (voices && voices.length > 0 ? getBestEnglishVoice(voices) : null);
+      const utterance = cloneOrNewUtterance(activeVoice);
 
-        window.speechSynthesis.addEventListener('voiceschanged', onVoicesChanged, { once: true });
+      let hasStarted = false;
+      utterance.onstart = () => {
+        hasStarted = true;
+      };
 
-        // Fallback speak in case voiceschanged does not trigger
-        setTimeout(() => {
-          if (!hasSpoken && isOpen) {
-            hasSpoken = true;
-            try {
-              window.speechSynthesis.speak(utterance);
-              hasSpokenWelcome = true;
-            } catch (err) {}
+      // 3. Speak immediately
+      window.speechSynthesis.speak(utterance);
+      hasSpokenWelcome = true;
+
+      // 4. Reliable repeats: safeguard against browser thread dropping speak() after cancel()
+      setTimeout(() => {
+        if (!isOpen) return;
+        try {
+          if (window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+          } else if (!hasStarted && !window.speechSynthesis.speaking && !window.speechSynthesis.pending) {
+            const retryUtter = cloneOrNewUtterance(activeVoice);
+            window.speechSynthesis.speak(retryUtter);
           }
-        }, 120);
-      }
+        } catch (err) {}
+      }, 70);
     } catch (e) {
       // Fail silently without error messages or layout shifts
+    }
+  }
+
+  // Pre-warm voices on idle / page load
+  if (typeof window !== 'undefined') {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(prewarmVoices, { timeout: 2000 });
+    } else {
+      setTimeout(prewarmVoices, 800);
     }
   }
 
@@ -1193,11 +1250,12 @@
    */
   function openChat() {
     if (isOpen) return;
+
+    // 1. Speak welcome voice immediately as the FIRST action (synchronous, user-gesture context)
+    playWelcomeVoice();
+
     isOpen = true;
     lastActiveElement = document.activeElement;
-
-    // Speak welcome voice in parallel (user-gesture context, zero UI delay)
-    playWelcomeVoice();
 
     chatWindow.classList.add('rg-chat-active');
     launcherBtn.classList.add('rg-chat-launcher-active');

@@ -2801,18 +2801,6 @@ img, video, canvas, svg {
   gap: 8px;
 }
 
-/* Sound FX Button */
-#rg-chat-sound-btn {
-  transition: var(--transition);
-}
-
-#rg-chat-sound-btn.active {
-  color: var(--accent-cyan);
-  background: rgba(0, 242, 255, 0.15);
-  border: 1px solid var(--border-glass-bright);
-  box-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
-}
-
 .rg-chat-header-btn {
   background: transparent;
   border: 1px solid transparent;

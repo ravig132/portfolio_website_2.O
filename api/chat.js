@@ -136,8 +136,9 @@ module.exports = async function handler(req, res) {
   // Determine language (priority: reply_lang -> lang -> detectLanguage)
   const detectedLang = reply_lang || lang || KNOWLEDGE.detectLanguage(sanitizedMessage);
 
-  // Check In-Memory Cache with cache key: ${detectedLang}:${sanitizedQuery}
-  const cacheKey = `${detectedLang}:${sanitizedMessage.toLowerCase()}`;
+  // Check In-Memory Cache with cache key: ${version}:${detectedLang}:${sanitizedQuery}
+  const cacheVersion = KNOWLEDGE.CACHE_VERSION || KNOWLEDGE.BRAND?.version || 'v2.0';
+  const cacheKey = `${cacheVersion}:${detectedLang}:${sanitizedMessage.toLowerCase()}`;
   const cachedEntry = inMemoryCache.get(cacheKey);
   if (cachedEntry && (now - cachedEntry.timestamp < CACHE_TTL_MS)) {
     return res.status(200).json({
@@ -206,8 +207,8 @@ module.exports = async function handler(req, res) {
     parts: [{ text: sanitizedMessage }]
   });
 
-  // Dynamic system prompt with targeted language directive
-  const systemInstruction = KNOWLEDGE.buildSystemInstruction(detectedLang);
+  // Dynamic system prompt with targeted language directive and topic-efficient context
+  const systemInstruction = KNOWLEDGE.buildSystemInstruction(detectedLang, sanitizedMessage);
 
   // Token efficiency: about 250 for English, about 350 for Hindi and Hinglish
   const maxOutputTokens = detectedLang === 'en' ? 250 : 350;

@@ -21,6 +21,16 @@
   const MAX_CHARS = 300;                   // Maximum user query length
 
   // ==========================================================================
+  // WELCOME VOICE CONFIGURATION (Web Speech API)
+  // ==========================================================================
+  const WELCOME_SPEECH_TEXT = "Welcome to Ravi dot Java Compiler";
+  const WELCOME_LANG = "en-IN";            // Prefers en-IN voice, falls back to en-US/en-GB/default
+  const WELCOME_RATE = 1;                  // Speech rate (0.1 to 10)
+  const WELCOME_PITCH = 1;                 // Speech pitch (0 to 2)
+  const WELCOME_VOLUME = 1;                // Speech volume (0 to 1)
+  const WELCOME_ONCE_PER_VISIT = true;     // Speak once per page visit (in-memory flag)
+
+  // ==========================================================================
   // IN-MEMORY STATE (No localStorage, No sessionStorage)
   // ==========================================================================
   let chatHistory = [];
@@ -29,8 +39,7 @@
   let isRevealing = false;
   let hasBooted = false;
   let isBooting = false;
-  let soundEnabled = false;
-  let audioCtx = null;
+  let hasSpokenWelcome = false;            // In-memory flag for WELCOME_ONCE_PER_VISIT
   let currentLang = 'en';                  // Tracked sticky language: 'en' | 'hi' | 'hinglish'
   let lastUserMessageText = '';
   let lastUserMessageTime = 0;
@@ -49,37 +58,95 @@
   let sendBtn = null;
   let clearBtn = null;
   let closeBtn = null;
-  let soundBtn = null;
-  let soundIcon = null;
   let charCounter = null;
   let newMsgPill = null;
   let newMsgText = null;
   let typingIndicatorEl = null;
 
   /**
-   * Web Audio API: Soft terminal key-click sound (Zero external audio files)
+   * Cancel any active welcome voice speech immediately
    */
-  function playClickSound(freq = 950) {
-    if (!soundEnabled) return;
+  function cancelWelcomeVoice() {
     try {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
       }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(160, audioCtx.currentTime + 0.025);
-      gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.025);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.03);
     } catch (e) {}
+  }
+
+  /**
+   * Resolve best matching English voice (en-IN > en-US > en-GB > any English > default)
+   */
+  function getBestEnglishVoice(voices) {
+    if (!voices || !voices.length) return null;
+    let voice = voices.find(v => v.lang && (v.lang === 'en-IN' || v.lang.replace('_', '-').toLowerCase() === 'en-in'));
+    if (voice) return voice;
+    voice = voices.find(v => v.lang && (v.lang === 'en-US' || v.lang.replace('_', '-').toLowerCase() === 'en-us'));
+    if (voice) return voice;
+    voice = voices.find(v => v.lang && (v.lang === 'en-GB' || v.lang.replace('_', '-').toLowerCase() === 'en-gb'));
+    if (voice) return voice;
+    voice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+    if (voice) return voice;
+    return voices.find(v => v.default) || voices[0] || null;
+  }
+
+  /**
+   * Web Speech API: Speak welcome phrase out loud in parallel on chat open
+   * Fails silently if unsupported or blocked by browser policies.
+   */
+  function playWelcomeVoice() {
+    if (WELCOME_ONCE_PER_VISIT && hasSpokenWelcome) return;
+
+    try {
+      if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+        return;
+      }
+
+      // Always cancel any prior speech before starting
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(WELCOME_SPEECH_TEXT);
+      utterance.rate = WELCOME_RATE;
+      utterance.pitch = WELCOME_PITCH;
+      utterance.volume = WELCOME_VOLUME;
+      utterance.lang = WELCOME_LANG;
+
+      const voices = window.speechSynthesis.getVoices();
+      if (voices && voices.length > 0) {
+        const bestVoice = getBestEnglishVoice(voices);
+        if (bestVoice) utterance.voice = bestVoice;
+        window.speechSynthesis.speak(utterance);
+        hasSpokenWelcome = true;
+      } else {
+        let hasSpoken = false;
+        const onVoicesChanged = () => {
+          if (hasSpoken || !isOpen) return;
+          hasSpoken = true;
+          try {
+            const vList = window.speechSynthesis.getVoices();
+            const bVoice = getBestEnglishVoice(vList);
+            if (bVoice) utterance.voice = bVoice;
+            window.speechSynthesis.speak(utterance);
+            hasSpokenWelcome = true;
+          } catch (err) {}
+        };
+
+        window.speechSynthesis.addEventListener('voiceschanged', onVoicesChanged, { once: true });
+
+        // Fallback speak in case voiceschanged does not trigger
+        setTimeout(() => {
+          if (!hasSpoken && isOpen) {
+            hasSpoken = true;
+            try {
+              window.speechSynthesis.speak(utterance);
+              hasSpokenWelcome = true;
+            } catch (err) {}
+          }
+        }, 120);
+      }
+    } catch (e) {
+      // Fail silently without error messages or layout shifts
+    }
   }
 
   /**
@@ -429,7 +496,7 @@
 
     // 4. Topic Matching across Keywords
     const topicOrder = [
-      'projects', 'skills', 'experience', 'certifications', 'resume',
+      'projects', 'skills', 'experience', 'hackathons', 'certifications', 'resume',
       'contact', 'about', 'journey', 'dsa'
     ];
 
@@ -649,7 +716,6 @@
       }
 
       textContainer.innerHTML = revealedHtml;
-      playClickSound(1020);
 
       if (isScrolledNearBottom()) {
         scrollToBottom();
@@ -887,7 +953,6 @@
 
     // Append User Message bubble instantly (slide-in ~200ms) with sent tick
     appendMessage('user', message, { lang: isDevanagari(message) ? 'hi' : 'en' });
-    playClickSound(1200);
 
     // 3. Check Local Slash Commands & Easter Eggs First (Zero API calls, instant execution)
     const easterEggResult = evaluateEasterEggs(message, detectedLang);
@@ -1040,14 +1105,12 @@
       if (skipped) return;
       const l1 = bootBox.querySelector('#rg-boot-1');
       if (l1) l1.style.display = 'block';
-      playClickSound(1100);
     }, 400);
 
     setTimeout(() => {
       if (skipped) return;
       const l2 = bootBox.querySelector('#rg-boot-2');
       if (l2) l2.style.display = 'block';
-      playClickSound(1250);
     }, 800);
 
     setTimeout(() => {
@@ -1133,6 +1196,9 @@
     isOpen = true;
     lastActiveElement = document.activeElement;
 
+    // Speak welcome voice in parallel (user-gesture context, zero UI delay)
+    playWelcomeVoice();
+
     chatWindow.classList.add('rg-chat-active');
     launcherBtn.classList.add('rg-chat-launcher-active');
     launcherBtn.setAttribute('aria-expanded', 'true');
@@ -1155,6 +1221,9 @@
   function closeChat() {
     if (!isOpen) return;
     isOpen = false;
+
+    // Cancel welcome voice speech immediately on close
+    cancelWelcomeVoice();
 
     chatWindow.classList.remove('rg-chat-active');
     launcherBtn.classList.remove('rg-chat-launcher-active');
@@ -1209,27 +1278,11 @@
     sendBtn = document.getElementById('rg-chat-send-btn');
     clearBtn = document.getElementById('rg-chat-clear-btn');
     closeBtn = document.getElementById('rg-chat-close-btn');
-    soundBtn = document.getElementById('rg-chat-sound-btn');
-    soundIcon = document.getElementById('rg-chat-sound-icon');
     charCounter = document.getElementById('rg-chat-char-counter');
     newMsgPill = document.getElementById('rg-chat-new-msg-pill');
     newMsgText = document.getElementById('rg-chat-new-msg-text');
 
     if (!launcherBtn || !chatWindow) return;
-
-    // Web Audio Sound Toggle (OFF by default)
-    if (soundBtn) {
-      soundBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        soundEnabled = !soundEnabled;
-        soundBtn.classList.toggle('active', soundEnabled);
-        if (soundIcon) {
-          soundIcon.className = soundEnabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
-        }
-        soundBtn.title = soundEnabled ? 'Sound: ON' : 'Sound: OFF';
-        if (soundEnabled) playClickSound(1100);
-      });
-    }
 
     // Launcher click
     launcherBtn.addEventListener('click', (e) => {
@@ -1302,6 +1355,10 @@
         closeChat();
       }
     });
+
+    // Cancel speech if user navigates away or unloads page
+    window.addEventListener('beforeunload', cancelWelcomeVoice);
+    window.addEventListener('pagehide', cancelWelcomeVoice);
 
     // Section links inside chat bubbles
     if (messagesContainer) {
